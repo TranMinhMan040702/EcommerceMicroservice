@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8.0.33
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: microservice
+    ports:
+      - "3308:3306"
+    restart: unless-stopped

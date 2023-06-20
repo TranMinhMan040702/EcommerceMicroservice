@@ -1,0 +1,16 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: identity
+  datasource:
+    url: jdbc:mysql://localhost:3308/microservice
+    username: admin
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: update
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
