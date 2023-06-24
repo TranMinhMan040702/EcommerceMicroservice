@@ -21,4 +21,8 @@ public class Role extends AbstractEntity {
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<User> users;
+
+    public Role(String role) {
+        this.role = role;
+    }
 }
