@@ -1,10 +1,7 @@
 package com.criscode.cart.enitty;
 
 import com.criscode.common.entity.AbstractEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 public class Cart extends AbstractEntity {
 
     @Column(name = "user_id")

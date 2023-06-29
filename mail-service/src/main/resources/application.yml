@@ -1,0 +1,18 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: mail
+  zipkin:
+    base-url: http://localhost:9411
+  rabbitmq:
+    addresses: localhost:5672
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: mantm040702@gmail.com
+    password:
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true

@@ -15,10 +15,10 @@ import java.util.Set;
 public class RegisterRequest {
 
     @NotBlank
-    private String firstname;
+    private String firstName;
 
     @NotBlank
-    private String lastname;
+    private String lastName;
 
     @NotBlank
     private String email;
@@ -26,7 +26,6 @@ public class RegisterRequest {
     @NotBlank
     private String password;
 
-    @NotBlank
     private Set<String> roles = new HashSet<>(Arrays.asList("USER"));
 
 }

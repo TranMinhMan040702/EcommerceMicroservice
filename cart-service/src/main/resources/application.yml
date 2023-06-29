@@ -9,10 +9,12 @@ spring:
     password: admin
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
   zipkin:
     base-url: http://localhost:9411
 eureka:
   client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
     fetch-registry: true
     register-with-eureka: true
