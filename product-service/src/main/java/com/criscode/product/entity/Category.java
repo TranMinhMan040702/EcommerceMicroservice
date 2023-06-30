@@ -1,10 +1,7 @@
 package com.criscode.product.entity;
 
 import com.criscode.common.entity.AbstractEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,7 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Category extends AbstractEntity {
+
     @Column(name = "name", unique = true, length = 32)
     @NotNull
     private String name;

@@ -17,6 +17,10 @@
         <module>address-service</module>
         <module>common</module>
         <module>like-product-service</module>
+        <module>amqp</module>
+        <module>mail-service</module>
+        <module>clients</module>
+        <module>exception-utils</module>
     </modules>
 	<name>ecommerce-microservice</name>
 	<description>Project Ecommerce Microservices</description>

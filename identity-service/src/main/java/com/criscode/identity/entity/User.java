@@ -1,10 +1,7 @@
 package com.criscode.identity.entity;
 
 import com.criscode.common.entity.AbstractEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class User extends AbstractEntity {
 
     @Column(name = "first_name")
