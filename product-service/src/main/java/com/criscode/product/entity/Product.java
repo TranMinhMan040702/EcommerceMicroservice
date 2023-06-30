@@ -2,10 +2,7 @@ package com.criscode.product.entity;
 
 import com.criscode.common.entity.AbstractEntity;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -18,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Product extends AbstractEntity {
     @Column(name = "name", length = 100)
     @NotNull

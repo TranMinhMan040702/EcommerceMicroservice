@@ -1,5 +1,6 @@
 package com.criscode.product.dto;
 
+import com.criscode.common.dto.AbstractDto;
 import lombok.*;
 
 import javax.validation.constraints.Min;
@@ -11,7 +12,7 @@ import java.util.List;
 @Setter
 @Getter
 @Builder
-public class ProductDto {
+public class ProductDto extends AbstractDto {
 
     @NotNull
     private String name;
@@ -21,22 +22,22 @@ public class ProductDto {
 
     @NotNull
     @Min(0)
-    private double price;
+    private Double price;
 
     @NotNull
     @Min(0)
-    private double promotionalPrice;
+    private Double promotionalPrice;
 
     @NotNull
     @Min(0)
-    private int quantity;
+    private Integer quantity;
 
-    private int sold;
+    private Integer sold;
 
-    private int rating;
+    private Integer rating;
 
     @NotNull
-    private long category;
+    private Integer category;
 
     private List<String> images;
 
