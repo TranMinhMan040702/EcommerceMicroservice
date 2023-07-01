@@ -1,6 +1,5 @@
-package com.criscode.product.dto;
+package com.criscode.clients.product.dto;
 
-import com.criscode.common.dto.AbstractDto;
 import lombok.*;
 
 import javax.validation.constraints.Min;
@@ -12,7 +11,9 @@ import java.util.List;
 @Setter
 @Getter
 @Builder
-public class ProductDto extends AbstractDto {
+public class ProductDto {
+
+    private Integer id;
 
     @NotNull
     private String name;

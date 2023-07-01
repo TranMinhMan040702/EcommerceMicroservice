@@ -1,4 +1,4 @@
-package com.criscode.common.entity;
+package com.criscode.cart.enitty;
 
 import lombok.Builder;
 import lombok.Getter;

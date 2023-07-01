@@ -1,6 +1,5 @@
 package com.criscode.identity.entity;
 
-import com.criscode.common.entity.AbstractEntity;
 import lombok.*;
 
 import javax.persistence.*;

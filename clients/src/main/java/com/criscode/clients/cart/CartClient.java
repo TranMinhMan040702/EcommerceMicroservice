@@ -10,8 +10,6 @@ import javax.validation.Valid;
 
 @FeignClient(name = "cart")
 public interface CartClient {
-    @PostMapping("api/v1/cart")
-    CartDto save(
-            @RequestBody
-            @Valid CartDto cartDto);
+    @PostMapping("/api/v1/create-cart")
+    CartDto save(@RequestBody @Valid CartDto cartDto);
 }

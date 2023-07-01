@@ -1,6 +1,5 @@
 package com.criscode.address.entity;
 
-import com.criscode.common.entity.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

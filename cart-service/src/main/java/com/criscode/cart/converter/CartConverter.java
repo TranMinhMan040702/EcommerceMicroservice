@@ -2,16 +2,21 @@ package com.criscode.cart.converter;
 
 import com.criscode.cart.enitty.Cart;
 import com.criscode.clients.cart.dto.CartDto;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class CartConverter {
 
+    private final CartItemConverter cartItemConverter;
+
     public CartDto map(Cart cart) {
-        return CartDto.builder()
-                .cartId(cart.getId())
-                .userId(cart.getUserId())
-                .build();
+        CartDto cartDto = new CartDto();
+        BeanUtils.copyProperties(cart, cartDto);
+        cartDto.setCartItemDtos(cartItemConverter.map(cart.getCartItems()));
+        return cartDto;
     }
 
     public Cart map(CartDto cartDto) {

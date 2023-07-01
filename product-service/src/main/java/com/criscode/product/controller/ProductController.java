@@ -1,13 +1,14 @@
 package com.criscode.product.controller;
 
+import com.criscode.clients.product.dto.ProductDto;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.product.constants.ApplicationConstants;
-import com.criscode.product.dto.ProductDto;
 import com.criscode.product.repository.ProductRepository;
 import com.criscode.product.service.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,8 +38,9 @@ public class ProductController {
     }
 
     @GetMapping("product")
-    public ResponseEntity<?> getProductById(@RequestParam Integer id){
-        return ResponseEntity.ok(productService.findById(id));
+    @ResponseStatus(HttpStatus.OK)
+    public ProductDto getProductById(@RequestParam Integer id){
+        return productService.findById(id);
     }
 
     @GetMapping("products/category/{id}")

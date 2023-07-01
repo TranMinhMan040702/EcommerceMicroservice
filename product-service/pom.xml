@@ -55,8 +55,12 @@
         </dependency>
 
         <dependency>
+            <groupId>io.projectreactor.netty</groupId>
+            <artifactId>reactor-netty-http</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.criscode</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>clients</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

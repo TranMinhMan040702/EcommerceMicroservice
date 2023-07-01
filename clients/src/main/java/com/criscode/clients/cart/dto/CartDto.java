@@ -1,8 +1,9 @@
 package com.criscode.clients.cart.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,10 +12,11 @@ import lombok.*;
 @Getter
 public class CartDto {
 
-    private Integer cartId;
+    private Integer id;
+
     private Integer userId;
 
-    @JsonProperty("user")
-    private UserDto userDto;
+    @JsonProperty("cartItems")
+    private List<CartItemDto> cartItemDtos;
 
 }
