@@ -1,13 +1,12 @@
 package com.criscode.cart.enitty;
 
-import com.criscode.common.entity.AbstractEntity;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "cart")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

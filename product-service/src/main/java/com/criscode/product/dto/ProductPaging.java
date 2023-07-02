@@ -1,5 +1,6 @@
 package com.criscode.product.dto;
 
+import com.criscode.clients.product.dto.ProductDto;
 import lombok.*;
 
 import java.util.List;

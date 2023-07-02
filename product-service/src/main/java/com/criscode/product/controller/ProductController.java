@@ -1,25 +1,35 @@
 package com.criscode.product.controller;
 
+import com.criscode.clients.order.dto.OrderItemDto;
+import com.criscode.clients.product.dto.ProductDto;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.product.constants.ApplicationConstants;
-import com.criscode.product.dto.ProductDto;
 import com.criscode.product.repository.ProductRepository;
 import com.criscode.product.service.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductController {
 
     private final ObjectMapper objectMapper;
     private final ProductService productService;
     private final ProductRepository productRepository;
+
+    @GetMapping("product")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductDto getProductById(@RequestParam("id") Integer id){
+        return productService.findById(id);
+    }
 
     @GetMapping("products")
     public ResponseEntity<?> findAll(
@@ -34,11 +44,6 @@ public class ProductController {
         return ResponseEntity.ok(
                 productService.findAll(categoryId, page, limit, sortBy, priceMin, priceMax, search)
         );
-    }
-
-    @GetMapping("product")
-    public ResponseEntity<?> getProductById(@RequestParam Integer id){
-        return ResponseEntity.ok(productService.findById(id));
     }
 
     @GetMapping("products/category/{id}")
@@ -75,6 +80,16 @@ public class ProductController {
     @DeleteMapping("/admin/products/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Integer id) {
         return ResponseEntity.ok(productService.delete(id));
+    }
+
+    @PostMapping("/product/update-quantity-sold")
+    public void updateQuantityAndSoldProduct(@RequestBody List<OrderItemDto> orderItemDtos) {
+        productService.updateQuantityAndSoldProduct(orderItemDtos);
+    }
+
+    @GetMapping("/product/check-quantity/{productId}")
+    public Integer checkQuantityOfProduct(@PathVariable("productId") Integer productId) {
+        return productService.quantityOfProduct(productId);
     }
 
 }

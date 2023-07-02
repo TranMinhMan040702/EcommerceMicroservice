@@ -7,10 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product_liked")
-public class LikeProduct {
-
-    @Id
-    private Integer id;
+public class LikeProduct extends AbstractEntity{
 
     @Column(name = "user_id")
     private Integer userId;

@@ -1,5 +1,6 @@
 package com.criscode.product.dto;
 
+import com.criscode.clients.product.dto.ProductDto;
 import com.criscode.product.entity.Product;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

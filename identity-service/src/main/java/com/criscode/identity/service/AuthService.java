@@ -2,6 +2,8 @@ package com.criscode.identity.service;
 
 import com.criscode.clients.cart.CartClient;
 import com.criscode.clients.cart.dto.CartDto;
+import com.criscode.clients.product.ProductClient;
+import com.criscode.clients.user.UserClient;
 import com.criscode.identity.config.CustomUserDetailsService;
 import com.criscode.identity.converter.UserConverter;
 import com.criscode.identity.dto.AuthRequest;

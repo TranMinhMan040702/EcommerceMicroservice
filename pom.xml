@@ -15,7 +15,6 @@
         <module>order-service</module>
         <module>review-service</module>
         <module>address-service</module>
-        <module>common</module>
         <module>like-product-service</module>
         <module>amqp</module>
         <module>mail-service</module>

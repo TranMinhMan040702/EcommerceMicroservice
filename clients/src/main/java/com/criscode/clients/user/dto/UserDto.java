@@ -1,9 +1,11 @@
-package com.criscode.clients.cart.dto;
+package com.criscode.clients.user.dto;
 
+import com.criscode.clients.cart.dto.CartDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @NoArgsConstructor
