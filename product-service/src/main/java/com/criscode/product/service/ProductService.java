@@ -3,6 +3,7 @@ package com.criscode.product.service;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.criscode.clients.product.dto.ProductDto;
+import com.criscode.clients.user.UserClient;
 import com.criscode.exceptionutils.AlreadyExistsException;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.product.converter.ProductConverter;
@@ -15,6 +16,7 @@ import com.criscode.product.repository.ImageProductRepository;
 import com.criscode.product.repository.ProductRepository;
 import com.criscode.product.specification.ProductSpecification;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +29,7 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;

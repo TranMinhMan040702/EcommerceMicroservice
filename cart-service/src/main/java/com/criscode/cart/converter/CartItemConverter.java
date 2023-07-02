@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CartItemConverter {
 
-//    private final ProductClient productClient;
+    private final ProductClient productClient;
     private final CartRepository cartRepository;
 
     public CartItemDto map(CartItem cartItem) {
         CartItemDto cartItemDto = new CartItemDto();
         BeanUtils.copyProperties(cartItem, cartItemDto);
         cartItemDto.setCartId(cartItem.getCart().getId());
-//        cartItemDto.setProductDto(productClient.getProductById(cartItem.getProductId()).getBody());
+        cartItemDto.setProductDto(productClient.getProductById(cartItem.getProductId()));
         return cartItemDto;
     }
 

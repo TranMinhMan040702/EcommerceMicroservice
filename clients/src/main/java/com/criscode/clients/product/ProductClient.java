@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "product")
 public interface ProductClient {
+
     @GetMapping("/api/v1/product")
-    ProductDto getProductById(@RequestParam Integer id);
+    ProductDto getProductById(@RequestParam("id") Integer id);
 }

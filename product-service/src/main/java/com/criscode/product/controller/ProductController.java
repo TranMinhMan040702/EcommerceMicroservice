@@ -7,7 +7,7 @@ import com.criscode.product.repository.ProductRepository;
 import com.criscode.product.service.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +15,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductController {
 
     private final ObjectMapper objectMapper;
     private final ProductService productService;
     private final ProductRepository productRepository;
+
+    @GetMapping("product")
+    @ResponseStatus(HttpStatus.OK)
+    public ProductDto getProductById(@RequestParam("id") Integer id){
+        return productService.findById(id);
+    }
 
     @GetMapping("products")
     public ResponseEntity<?> findAll(
@@ -35,12 +41,6 @@ public class ProductController {
         return ResponseEntity.ok(
                 productService.findAll(categoryId, page, limit, sortBy, priceMin, priceMax, search)
         );
-    }
-
-    @GetMapping("product")
-    @ResponseStatus(HttpStatus.OK)
-    public ProductDto getProductById(@RequestParam Integer id){
-        return productService.findById(id);
     }
 
     @GetMapping("products/category/{id}")

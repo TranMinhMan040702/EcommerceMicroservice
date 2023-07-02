@@ -15,7 +15,9 @@ public class CartConverter {
     public CartDto map(Cart cart) {
         CartDto cartDto = new CartDto();
         BeanUtils.copyProperties(cart, cartDto);
-        cartDto.setCartItemDtos(cartItemConverter.map(cart.getCartItems()));
+        if (cart.getCartItems() != null){
+            cartDto.setCartItemDtos(cartItemConverter.map(cart.getCartItems()));
+        }
         return cartDto;
     }
 

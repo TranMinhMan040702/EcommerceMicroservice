@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "identity")
 public interface UserClient {
     @GetMapping("/api/v1/user-check/{userid}")
-    UserExistResponse existed(@PathVariable Integer userid);
+    UserExistResponse existed(@PathVariable("userid") Integer userid);
 }
