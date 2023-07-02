@@ -2,6 +2,7 @@ package com.criscode.product.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.criscode.clients.order.dto.OrderItemDto;
 import com.criscode.clients.product.dto.ProductDto;
 import com.criscode.clients.user.UserClient;
 import com.criscode.exceptionutils.AlreadyExistsException;
@@ -166,6 +167,27 @@ public class ProductService {
         productRepository.delete(product);
         resp.put("deleted", "Success");
         return resp;
+    }
+
+
+    /**
+     * @param orderItemDtos
+     */
+    public void updateQuantityAndSoldProduct(List<OrderItemDto> orderItemDtos) {
+        orderItemDtos.stream().forEach(orderItemDto -> {
+            Product product = productRepository.findById(orderItemDto.getProductId()).orElseThrow(
+                    () -> new NotFoundException("Product not exist with id: " + orderItemDto.getProductId())
+            );
+            product.setQuantity(product.getQuantity() - orderItemDto.getCount());
+            product.setSold(product.getSold()+ orderItemDto.getCount());
+            productRepository.save(product);
+        });
+    }
+    public Integer quantityOfProduct(Integer productId) {
+        Product product = productRepository.findById(productId).orElseThrow(
+                () -> new NotFoundException("Product not exist with id: " + productId)
+        );
+        return product.getQuantity();
     }
 
 }

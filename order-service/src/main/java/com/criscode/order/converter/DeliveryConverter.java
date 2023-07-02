@@ -11,17 +11,17 @@ import java.util.stream.Collectors;
 @Component
 public class DeliveryConverter {
 
-    public DeliveryDto map(Delivery delivery) {
+    public DeliveryDto mapToDto(Delivery delivery) {
         DeliveryDto deliveryDto = new DeliveryDto();
         BeanUtils.copyProperties(delivery, deliveryDto);
         return deliveryDto;
     }
 
-    public List<DeliveryDto> map(List<Delivery> deliveries) {
-        return deliveries.stream().map(this::map).collect(Collectors.toList());
+    public List<DeliveryDto> mapToDto(List<Delivery> deliveries) {
+        return deliveries.stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
-    public Delivery map(DeliveryDto deliveryDto) {
+    public Delivery mapToEntity(DeliveryDto deliveryDto) {
         Delivery delivery = new Delivery();
         BeanUtils.copyProperties(deliveryDto, delivery);
         return delivery;

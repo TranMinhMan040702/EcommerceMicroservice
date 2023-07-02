@@ -31,12 +31,12 @@ public class Order extends AbstractEntity {
     private StatusOrder status;
 
     @Column(name = "is_paid_before")
-    private boolean isPaidBefore = false;
+    private Boolean isPaidBefore = false;
 
     @NotNull
     @Min(0)
     @Column(name = "amount_from_user")
-    private double amountFromUser;
+    private Double amountFromUser;
 
     @Column(name = "user_id")
     private Integer userId;

@@ -110,9 +110,11 @@ public class CartService {
      * @param cartId
      */
     public void clearedCart(Integer cartId) {
-        Optional<Cart> cart = cartRepository.findById(cartId);
-        cart.get().getCartItems().clear();
-        cartRepository.save(cart.get());
+        Cart cart = cartRepository.findById(cartId).orElseThrow(
+                ()-> new NotFoundException("Cart does not exist with id: " + cartId)
+        );
+        cart.getCartItems().clear();
+        cartRepository.save(cart);
     }
 
 }

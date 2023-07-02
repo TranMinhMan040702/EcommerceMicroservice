@@ -19,7 +19,7 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping("cart/user/{id}")
-    public ResponseEntity<?> findCartByUser(@PathVariable Integer id) {
+    public ResponseEntity<CartDto> findCartByUser(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(cartService.findCartByUser(id));
     }
 
@@ -42,6 +42,11 @@ public class CartController {
     @DeleteMapping("cart/deleteAll")
     public ResponseEntity<?> deleteAllProductInCart(@RequestParam("cartItemId") Integer cartItemId) {
         return ResponseEntity.ok(cartService.deleteAllItemInCartItem(cartItemId));
+    }
+
+    @PostMapping("/clear-cart/{cartId}")
+    public void clearedCart(@PathVariable("cartId") Integer cartId) {
+        cartService.clearedCart(cartId);
     }
 
 }

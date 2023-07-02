@@ -19,11 +19,11 @@ public class DeliveryService {
     private final DeliveryConverter deliveryConverter;
 
     public DeliveryDto save(DeliveryDto deliveryDto) {
-        return deliveryConverter.map(deliveryRepository.save(deliveryConverter.map(deliveryDto)));
+        return deliveryConverter.mapToDto(deliveryRepository.save(deliveryConverter.mapToEntity(deliveryDto)));
     }
 
     public List<DeliveryDto> findAll() {
-        return deliveryConverter.map(deliveryRepository.findAll());
+        return deliveryConverter.mapToDto(deliveryRepository.findAll());
     }
 
     // todo: delete one, all
