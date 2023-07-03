@@ -21,4 +21,6 @@ public interface ProductClient {
     ProductExistResponse existed(@PathVariable("productId") Integer productId);
     @GetMapping("/api/v1/product/get-product-like/{ids}")
     List<ProductDto> getAllProductLiked(@PathVariable("ids") String[] ids);
+    @PostMapping("/api/v1/product/update-rating")
+    void updateRating(@RequestParam("productId") Integer productId, @RequestParam("rating") Integer rating);
 }

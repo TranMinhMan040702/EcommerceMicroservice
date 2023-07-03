@@ -3,6 +3,7 @@ package com.criscode.identity.controller;
 import com.criscode.clients.user.dto.UserDto;
 import com.criscode.clients.user.dto.UserExistResponse;
 import com.criscode.clients.user.dto.AddressDto;
+import com.criscode.clients.user.dto.UserReviewDto;
 import com.criscode.identity.constants.ApplicationConstants;
 import com.criscode.identity.service.AddressService;
 import com.criscode.identity.service.UserService;
@@ -47,7 +48,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findOneByUserId(id));
     }
 
-    @PostMapping("/users")
+    @PostMapping("users")
     public ResponseEntity<?> updateUser(
             @RequestParam("model") String JsonObject,
             @RequestParam(name = "file", required = false) MultipartFile file) throws Exception {
@@ -70,6 +71,11 @@ public class UserController {
     @PutMapping("users/addresses/{addressId}")
     public ResponseEntity<?> deleteAddress(@PathVariable("addressId") Integer addressId) {
         return ResponseEntity.ok(addressService.deleteAddressById(addressId));
+    }
+
+    @GetMapping("get-user-review/{userId}")
+    public UserReviewDto getUserReview(@PathVariable("userId") Integer userId) {
+        return userService.getUserReview(userId);
     }
 
 }

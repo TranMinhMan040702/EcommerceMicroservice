@@ -104,4 +104,10 @@ public class ProductController {
         return productService.getAllProductLiked(ids);
     }
 
+    @PostMapping("/product/update-rating")
+    public void updateRating(
+            @RequestParam("productId") Integer productId, @RequestParam("rating") Integer rating) {
+        productService.updateRatingProduct(productId, rating);
+    }
+
 }

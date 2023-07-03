@@ -4,6 +4,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.criscode.clients.user.dto.UserDto;
 import com.criscode.clients.user.dto.UserExistResponse;
+import com.criscode.clients.user.dto.UserReviewDto;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.identity.converter.UserConverter;
 import com.criscode.identity.dto.UserPaging;
@@ -49,6 +50,18 @@ public class UserService {
 
     public List<UserDto> findAll() {
         return userConverter.mapToDto(userRepository.findAll());
+    }
+
+    public UserReviewDto getUserReview(Integer userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new NotFoundException("User does not exist with id: " + userId)
+        );
+        return UserReviewDto.builder()
+                .id(user.getId())
+                .firstname(user.getFirstName())
+                .lastname(user.getLastName())
+                .avatar(user.getAvatar())
+                .build();
     }
 
     public UserDto findOneByUserId(Integer userId) {

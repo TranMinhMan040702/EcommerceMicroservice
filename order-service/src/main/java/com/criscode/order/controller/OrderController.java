@@ -67,4 +67,9 @@ public class OrderController {
         return ResponseEntity.ok(orderService.deleteOrder(id));
     }
 
+    @GetMapping("/order/get-status/{orderId}")
+    public String getStatusOrder(@PathVariable("orderId") Integer orderId) {
+        return orderService.getStatusOrder(orderId);
+    }
+
 }

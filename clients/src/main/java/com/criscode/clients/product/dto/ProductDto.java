@@ -14,6 +14,8 @@ import java.util.List;
 @Builder
 public class ProductDto {
 
+    private Integer id;
+
     @NotNull
     private String name;
 

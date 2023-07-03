@@ -152,4 +152,11 @@ public class OrderService {
         return findAllOrdersByUser(order.getUserId());
     }
 
+    public String getStatusOrder(Integer orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new NotFoundException("Order does not exist with id: " + orderId)
+        );
+        return order.getStatus().toString();
+    }
+
 }

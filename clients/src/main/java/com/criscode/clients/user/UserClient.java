@@ -2,6 +2,7 @@ package com.criscode.clients.user;
 
 import com.criscode.clients.user.dto.UserDto;
 import com.criscode.clients.user.dto.UserExistResponse;
+import com.criscode.clients.user.dto.UserReviewDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,5 +17,7 @@ public interface UserClient {
 
     @GetMapping("/api/v1/admin/get-all-user")
     List<UserDto> findAll();
+    @GetMapping("/api/v1/get-user-review/{userId}")
+    UserReviewDto getUserReview(@PathVariable("userId") Integer userId);
 
 }

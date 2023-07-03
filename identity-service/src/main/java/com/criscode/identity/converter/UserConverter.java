@@ -2,6 +2,7 @@ package com.criscode.identity.converter;
 
 import com.criscode.clients.cart.CartClient;
 import com.criscode.clients.user.dto.UserDto;
+import com.criscode.clients.user.dto.UserReviewDto;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.identity.dto.RegisterRequest;
 import com.criscode.identity.dto.UserPaging;

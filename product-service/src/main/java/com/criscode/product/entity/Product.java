@@ -41,12 +41,12 @@ public class Product extends AbstractEntity {
 
     @Min(0)
     @Column(name = "sold")
-    private Integer sold = 0;
+    private Integer sold;
 
     @Min(0)
     @Max(5)
     @Column(name = "rating")
-    private Integer rating = 3;
+    private Integer rating;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
