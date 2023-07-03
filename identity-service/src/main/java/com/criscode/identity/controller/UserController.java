@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/")
 @RequiredArgsConstructor
@@ -33,6 +35,11 @@ public class UserController {
             @RequestParam(defaultValue = ApplicationConstants.DEFAULT_LIMIT_SORT_BY, required = false) String sortBy,
             @RequestParam(required = false) String search) {
         return ResponseEntity.ok(userService.findAll(page, limit, sortBy, search));
+    }
+
+    @GetMapping("admin/get-all-user")
+    public List<UserDto> findAll() {
+        return userService.findAll();
     }
 
     @GetMapping("users/{id}")

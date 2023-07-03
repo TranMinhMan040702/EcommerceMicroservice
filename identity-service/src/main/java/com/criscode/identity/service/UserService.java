@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -44,6 +45,10 @@ public class UserService {
         Page<User> users = userRepository.findAll(specification, paging);
 
         return userConverter.mapToDto(users);
+    }
+
+    public List<UserDto> findAll() {
+        return userConverter.mapToDto(userRepository.findAll());
     }
 
     public UserDto findOneByUserId(Integer userId) {

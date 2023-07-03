@@ -4,6 +4,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.criscode.clients.order.dto.OrderItemDto;
 import com.criscode.clients.product.dto.ProductDto;
+import com.criscode.clients.product.dto.ProductExistResponse;
 import com.criscode.clients.user.UserClient;
 import com.criscode.exceptionutils.AlreadyExistsException;
 import com.criscode.exceptionutils.NotFoundException;
@@ -28,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -183,11 +185,26 @@ public class ProductService {
             productRepository.save(product);
         });
     }
+
+    /**
+     * @param productId
+     * @return
+     */
     public Integer quantityOfProduct(Integer productId) {
         Product product = productRepository.findById(productId).orElseThrow(
                 () -> new NotFoundException("Product not exist with id: " + productId)
         );
         return product.getQuantity();
+    }
+
+    public ProductExistResponse existed(Integer productId) {
+        return productRepository.findById(productId).isPresent()
+                ? new ProductExistResponse(true)
+                : new ProductExistResponse(false);
+    }
+
+    public List<ProductDto> getAllProductLiked(String[] ids) {
+        return Arrays.stream(ids).map(id -> findById(Integer.parseInt(id))).collect(Collectors.toList());
     }
 
 }

@@ -47,8 +47,8 @@ public class UserConverter {
     }
 
     public User mapToEntity(UserDto userDto) throws ParseException {
-        User user = userRepository.findById(userDto.getUserId()).orElseThrow(
-                () -> new NotFoundException("User does not exist with id: " + userDto.getUserId())
+        User user = userRepository.findById(userDto.getId()).orElseThrow(
+                () -> new NotFoundException("User does not exist with id: " + userDto.getId())
         );
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -67,10 +67,14 @@ public class UserConverter {
         if (!(user.getBirthday() == null)) {
             dto.setBirthday(formatter.format(user.getBirthday()));
         }
-        dto.setCartId(cartClient.findCartByUser(user.getId()).getBody().getId());
+        dto.setCartId(cartClient.findCartByUser(user.getId()).getId());
         dto.setRoles(roleConverter.mapToDto(user.getRoles()));
         dto.setAddresses(addressConverter.mapToDto(user.getAddresses()));
         return dto;
+    }
+
+    public List<UserDto> mapToDto(List<User> users) {
+        return users.stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
     public UserPaging mapToDto(Page<User> users) {

@@ -119,7 +119,7 @@ public class OrderService {
         // todo: update quantity and sold of product
         productClient.updateQuantityAndSoldProduct(orderDto.getOrderItemDtos());
         // todo: clear cart
-        cartClient.clearedCart(cartClient.findCartByUser(orderDto.getUserId()).getBody().getId());
+        cartClient.clearedCart(cartClient.findCartByUser(orderDto.getUserId()).getId());
         return orderConverter.mapToDto(order);
     }
 

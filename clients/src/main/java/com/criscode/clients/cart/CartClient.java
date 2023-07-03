@@ -14,9 +14,9 @@ import javax.validation.Valid;
 public interface CartClient {
     @PostMapping("/api/v1/create-cart")
     CartDto save(@RequestBody @Valid CartDto cartDto);
-    @PostMapping("/clear-cart/{cartId}")
+    @PostMapping("/api/v1/clear-cart/{cartId}")
     void clearedCart(@PathVariable("cartId") Integer cartId);
-    @GetMapping("cart/user/{id}")
-    ResponseEntity<CartDto> findCartByUser(@PathVariable("id") Integer id);
+    @GetMapping("/api/v1/cart/user/{id}")
+    CartDto findCartByUser(@PathVariable("id") Integer id);
 
 }

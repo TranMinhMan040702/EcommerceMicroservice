@@ -17,7 +17,7 @@ import java.util.Set;
 @Getter
 public class UserDto {
 
-    private Integer userId;
+    private Integer id;
 
     private String firstName;
 
