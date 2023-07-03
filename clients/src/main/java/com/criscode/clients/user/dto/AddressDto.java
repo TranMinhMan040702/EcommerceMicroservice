@@ -1,4 +1,4 @@
-package com.criscode.identity.dto;
+package com.criscode.clients.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

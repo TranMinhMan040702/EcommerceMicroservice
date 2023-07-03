@@ -42,7 +42,7 @@ public class AuthService {
                     .status(HttpStatus.BAD_REQUEST.value())
                     .build();
         } else {
-            User user = userConverter.map(registerRequest);
+            User user = userConverter.mapToEntity(registerRequest);
             user = userRepository.save(user);
             CartDto cartDto = CartDto.builder().userId(user.getId()).build();
             cartClient.save(cartDto);

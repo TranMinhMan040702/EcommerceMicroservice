@@ -7,6 +7,8 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,11 +29,16 @@ public class UserDto {
 
     private String gender;
 
-    private Date birthday;
+    private String birthday;
+
+    private Set<String> roles;
 
     private String avatar;
 
-    @JsonProperty("cart")
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private CartDto cartDto;
+    private Integer cartId;
+    private List<AddressDto> addresses;
+
+//    @JsonProperty("cart")
+//    @JsonInclude(JsonInclude.Include.NON_NULL)
+//    private CartDto cartDto;
 }
