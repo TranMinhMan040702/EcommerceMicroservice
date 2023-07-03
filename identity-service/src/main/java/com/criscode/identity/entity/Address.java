@@ -1,13 +1,11 @@
-package com.criscode.address.entity;
+package com.criscode.identity.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "address")
@@ -35,8 +33,9 @@ public class Address extends AbstractEntity {
     private String street;
 
     @Column(name = "status")
-    private boolean status;
+    private Boolean status;
 
-    @Column(name = "user_id")
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

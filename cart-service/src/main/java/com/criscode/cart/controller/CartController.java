@@ -19,8 +19,8 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping("cart/user/{id}")
-    public ResponseEntity<CartDto> findCartByUser(@PathVariable("id") Integer id) {
-        return ResponseEntity.ok(cartService.findCartByUser(id));
+    public CartDto findCartByUser(@PathVariable("id") Integer id) {
+        return cartService.findCartByUser(id);
     }
 
     @PostMapping("create-cart")

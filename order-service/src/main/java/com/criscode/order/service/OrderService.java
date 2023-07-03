@@ -119,7 +119,7 @@ public class OrderService {
         // todo: update quantity and sold of product
         productClient.updateQuantityAndSoldProduct(orderDto.getOrderItemDtos());
         // todo: clear cart
-        cartClient.clearedCart(cartClient.findCartByUser(orderDto.getUserId()).getBody().getId());
+        cartClient.clearedCart(cartClient.findCartByUser(orderDto.getUserId()).getId());
         return orderConverter.mapToDto(order);
     }
 
@@ -150,6 +150,13 @@ public class OrderService {
         );
         orderRepository.delete(order);
         return findAllOrdersByUser(order.getUserId());
+    }
+
+    public String getStatusOrder(Integer orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new NotFoundException("Order does not exist with id: " + orderId)
+        );
+        return order.getStatus().toString();
     }
 
 }

@@ -20,10 +20,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AuthService {
 
     private final UserRepository userRepository;
@@ -40,7 +42,7 @@ public class AuthService {
                     .status(HttpStatus.BAD_REQUEST.value())
                     .build();
         } else {
-            User user = userConverter.map(registerRequest);
+            User user = userConverter.mapToEntity(registerRequest);
             user = userRepository.save(user);
             CartDto cartDto = CartDto.builder().userId(user.getId()).build();
             cartClient.save(cartDto);

@@ -1,7 +1,9 @@
 package com.criscode.product.controller;
 
+import com.criscode.clients.likeproduct.dto.LikeProductDto;
 import com.criscode.clients.order.dto.OrderItemDto;
 import com.criscode.clients.product.dto.ProductDto;
+import com.criscode.clients.product.dto.ProductExistResponse;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.product.constants.ApplicationConstants;
 import com.criscode.product.repository.ProductRepository;
@@ -90,6 +92,22 @@ public class ProductController {
     @GetMapping("/product/check-quantity/{productId}")
     public Integer checkQuantityOfProduct(@PathVariable("productId") Integer productId) {
         return productService.quantityOfProduct(productId);
+    }
+
+    @GetMapping("/product/check-exist/{productId}")
+    public ProductExistResponse existed(@PathVariable("productId") Integer productId) {
+        return productService.existed(productId);
+    }
+
+    @GetMapping("/product/get-product-like/{ids}")
+    public List<ProductDto> getAllProductLiked(@PathVariable("ids") String[] ids) {
+        return productService.getAllProductLiked(ids);
+    }
+
+    @PostMapping("/product/update-rating")
+    public void updateRating(
+            @RequestParam("productId") Integer productId, @RequestParam("rating") Integer rating) {
+        productService.updateRatingProduct(productId, rating);
     }
 
 }

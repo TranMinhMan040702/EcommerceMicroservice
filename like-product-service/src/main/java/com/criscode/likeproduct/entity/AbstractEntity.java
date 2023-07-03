@@ -17,10 +17,6 @@ import java.util.Date;
 @Getter
 public abstract class AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     @Column(name = "created_by")
     @CreatedBy
     private String createdBy;

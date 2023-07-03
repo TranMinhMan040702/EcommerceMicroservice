@@ -1,17 +1,24 @@
 package com.criscode.likeproduct.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.*;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "product_liked")
-public class LikeProduct extends AbstractEntity{
+@IdClass(PrimaryKey.class)
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+public class LikeProduct extends AbstractEntity {
 
+    @Id
     @Column(name = "user_id")
     private Integer userId;
 
+    @Id
     @Column(name = "product_id")
     private Integer productId;
 

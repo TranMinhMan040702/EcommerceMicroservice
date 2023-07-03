@@ -27,7 +27,7 @@ public class Review extends AbstractEntity {
     @Min(0)
     @Max(5)
     @Column(name = "rating")
-    private int rating;
+    private Integer rating;
 
     @Column(name = "user_id")
     private Integer userId;

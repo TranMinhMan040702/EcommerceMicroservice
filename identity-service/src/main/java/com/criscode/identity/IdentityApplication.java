@@ -22,13 +22,6 @@ public class IdentityApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner (RoleRepository roleRepository) {
-        return args -> {
-            Role role = Role.builder().role("USER").build();
-            roleRepository.save(role);
-        };
-    }
-    @Bean
     public HttpClient httpClient() {
         return HttpClient.create().resolver(DefaultAddressResolverGroup.INSTANCE);
     }

@@ -4,9 +4,11 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.criscode.clients.order.dto.OrderItemDto;
 import com.criscode.clients.product.dto.ProductDto;
+import com.criscode.clients.product.dto.ProductExistResponse;
 import com.criscode.clients.user.UserClient;
 import com.criscode.exceptionutils.AlreadyExistsException;
 import com.criscode.exceptionutils.NotFoundException;
+import com.criscode.product.constants.ApplicationConstants;
 import com.criscode.product.converter.ProductConverter;
 import com.criscode.product.dto.ProductPaging;
 import com.criscode.product.entity.Category;
@@ -28,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,6 +59,7 @@ public class ProductService {
         if (productDto.getId() == null) {
             BeanUtils.copyProperties(productDto, product);
             Product finalProduct = product;
+            finalProduct.setRating(ApplicationConstants.DEFAULT_RATING_PRODUCT);
             Arrays.stream(files).forEach(file -> images.add(saveCloudinary(file, finalProduct)));
         } else {
             product = productRepository.findById(productDto.getId())
@@ -183,11 +187,46 @@ public class ProductService {
             productRepository.save(product);
         });
     }
+
+    /**
+     * @param productId
+     * @return
+     */
     public Integer quantityOfProduct(Integer productId) {
         Product product = productRepository.findById(productId).orElseThrow(
                 () -> new NotFoundException("Product not exist with id: " + productId)
         );
         return product.getQuantity();
+    }
+
+    /**
+     * @param productId
+     * @return
+     */
+    public ProductExistResponse existed(Integer productId) {
+        return productRepository.findById(productId).isPresent()
+                ? new ProductExistResponse(true)
+                : new ProductExistResponse(false);
+    }
+
+    /**
+     * @param ids
+     * @return
+     */
+    public List<ProductDto> getAllProductLiked(String[] ids) {
+        return Arrays.stream(ids).map(id -> findById(Integer.parseInt(id))).collect(Collectors.toList());
+    }
+
+    /**
+     * @param productId
+     * @param rating
+     */
+    public void updateRatingProduct(Integer productId, Integer rating) {
+        Product product = productRepository.findById(productId).orElseThrow(
+                () -> new NotFoundException("Product not exist with id: " + productId)
+        );
+        product.setRating(rating);
+        productRepository.save(product);
     }
 
 }
