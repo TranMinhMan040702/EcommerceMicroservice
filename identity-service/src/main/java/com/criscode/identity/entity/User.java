@@ -45,4 +45,7 @@ public class User extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Address> addresses;
+
 }

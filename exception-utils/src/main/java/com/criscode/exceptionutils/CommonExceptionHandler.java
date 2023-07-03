@@ -1,16 +1,23 @@
 package com.criscode.exceptionutils;
 
+import com.criscode.exceptionutils.error.Error;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import com.criscode.exceptionutils.error.Error;
+
 import javax.servlet.http.HttpServletRequest;
 
-public interface CommonExceptionHandler {
+@ControllerAdvice
+@Slf4j
+@RequiredArgsConstructor
+public class CommonExceptionHandler {
 
     @ExceptionHandler(value = {NotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    default Error handleNotFound(final NotFoundException ex, HttpServletRequest request) {
+    public Error handleNotFound(final NotFoundException ex, HttpServletRequest request) {
         return Error.builder()
                 .status(HttpStatus.NOT_FOUND.value())
                 .detail(ex.getMessage())
@@ -21,7 +28,7 @@ public interface CommonExceptionHandler {
 
     @ExceptionHandler(value = {AlreadyExistsException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
-    default Error handleAlreadyExists(final AlreadyExistsException ex, HttpServletRequest request) {
+    public Error handleAlreadyExists(final AlreadyExistsException ex, HttpServletRequest request) {
         return Error.builder()
                 .status(HttpStatus.CONFLICT.value())
                 .detail(ex.getMessage())
@@ -32,7 +39,7 @@ public interface CommonExceptionHandler {
 
     @ExceptionHandler(value = {InvalidDataException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    default Error handleInvalidData(final InvalidDataException ex, HttpServletRequest request) {
+    public Error handleInvalidData(final InvalidDataException ex, HttpServletRequest request) {
         return Error.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
                 .detail(ex.getMessage())

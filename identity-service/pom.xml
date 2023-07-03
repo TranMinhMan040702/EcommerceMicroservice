@@ -72,6 +72,12 @@
             <groupId>io.projectreactor.netty</groupId>
             <artifactId>reactor-netty-http</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.criscode</groupId>
+            <artifactId>exception-utils</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>com.criscode</groupId>
             <artifactId>clients</artifactId>
