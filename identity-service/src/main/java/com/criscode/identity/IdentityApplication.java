@@ -13,7 +13,10 @@ import reactor.netty.http.client.HttpClient;
 
 import javax.swing.*;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+        "com.criscode.amqp",
+        "com.criscode.identity"
+})
 @EnableEurekaClient
 @EnableFeignClients(basePackages = "com.criscode.clients")
 public class IdentityApplication {

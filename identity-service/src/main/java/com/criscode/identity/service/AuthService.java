@@ -1,9 +1,14 @@
 package com.criscode.identity.service;
 
+import com.criscode.amqp.RabbitMQMessageProducer;
 import com.criscode.clients.cart.CartClient;
 import com.criscode.clients.cart.dto.CartDto;
+import com.criscode.clients.mail.OtpClient;
+import com.criscode.clients.mail.dto.CheckOtpResponse;
+import com.criscode.clients.mail.dto.EmailDetails;
 import com.criscode.clients.product.ProductClient;
 import com.criscode.clients.user.UserClient;
+import com.criscode.exceptionutils.AlreadyExistsException;
 import com.criscode.identity.config.CustomUserDetailsService;
 import com.criscode.identity.converter.UserConverter;
 import com.criscode.identity.dto.AuthRequest;
@@ -34,10 +39,16 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final UserConverter userConverter;
     private final CartClient cartClient;
+    private final OtpClient otpClient;
+    private final RabbitMQMessageProducer producer;
+    private String EXCHANGE = "internal.exchange";
+    private String ROUTIN_KEY = "internal.mail.routing-key";
 
-    public AuthResponse saveUser(RegisterRequest registerRequest) {
+    public AuthResponse saveUser(RegisterRequest registerRequest, String code) {
 
-        if (emailCheckExistResponse(registerRequest).existed()) {
+        CheckOtpResponse checkOtpResponse = otpClient.checkOtp(code, registerRequest.getEmail());
+
+        if (!checkOtpResponse.correct()) {
             return AuthResponse.builder()
                     .status(HttpStatus.BAD_REQUEST.value())
                     .build();
@@ -53,8 +64,19 @@ public class AuthService {
         }
     }
 
-    public EmailCheckExistResponse emailCheckExistResponse(RegisterRequest registerRequest) {
-        Optional<User> user = userRepository.findByEmail(registerRequest.getEmail());
+    public void sendEmail(String email) {
+        if (emailCheckExistResponse(email).existed()) {
+            throw new AlreadyExistsException("Email already exist: " + email);
+        }
+        producer.publish(
+                EmailDetails.builder().recipient(email).build(),
+                EXCHANGE,
+                ROUTIN_KEY
+        );
+    }
+
+    public EmailCheckExistResponse emailCheckExistResponse(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
         return user.isPresent()
                 ? new EmailCheckExistResponse(true)
                 : new EmailCheckExistResponse(false);

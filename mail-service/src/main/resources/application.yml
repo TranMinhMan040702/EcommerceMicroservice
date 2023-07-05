@@ -3,6 +3,13 @@ server:
 spring:
   application:
     name: mail
+  datasource:
+    url: jdbc:mysql://localhost:3308/microservice
+    username: admin
+    password: admin
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
   zipkin:
     base-url: http://localhost:9411
   rabbitmq:
@@ -10,9 +17,35 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: mantm040702@gmail.com
-    password:
+    username: cristran040702@gmail.com
+    password: wxjugsquhiyajgdc
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 142564064113-lno4pp023aamu77gk7bljar2vt5cb83c.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - profile
+              - mail
 eureka:
   client:
-    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
     fetch-registry: true
+    register-with-eureka: true
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queue:
+    mail: mail.queue
+  routing-keys:
+    internal-mail: internal.mail.routing-key
