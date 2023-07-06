@@ -19,6 +19,7 @@
         <module>mail-service</module>
         <module>clients</module>
         <module>exception-utils</module>
+        <module>notification-service</module>
     </modules>
 	<name>ecommerce-microservice</name>
 	<description>Project Ecommerce Microservices</description>

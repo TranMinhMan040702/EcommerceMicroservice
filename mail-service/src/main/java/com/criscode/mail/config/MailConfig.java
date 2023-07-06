@@ -1,6 +1,5 @@
 package com.criscode.mail.config;
 
-import lombok.Getter;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -15,10 +14,10 @@ public class MailConfig {
     @Value("${rabbitmq.exchanges.internal}")
     private String internalExchange;
 
-    @Value(("${rabbitmq.queue.mail}"))
+    @Value("${rabbitmq.queue.mail}")
     private String mailQueue;
 
-    @Value(("${rabbitmq.routing-keys.internal-mail}"))
+    @Value("${rabbitmq.routing-keys.internal-mail}")
     private String internalMailRoutingKey;
 
     @Bean

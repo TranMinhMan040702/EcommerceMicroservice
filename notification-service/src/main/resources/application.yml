@@ -1,8 +1,8 @@
 server:
-  port: 8084
+  port: 8088
 spring:
   application:
-    name: review
+    name: notification
   datasource:
     url: jdbc:mysql://localhost:3308/microservice
     username: admin
@@ -12,9 +12,20 @@ spring:
       ddl-auto: create-drop
   zipkin:
     base-url: http://localhost:9411
+  rabbitmq:
+    addresses: localhost:5672
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
     fetch-registry: true
     register-with-eureka: true
+
+rabbitmq:
+  exchanges:
+    internal: internal.exchange
+  queue:
+    notification: notification.queue
+  routing-keys:
+    internal-notification: internal.notification.routing-key

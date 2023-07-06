@@ -23,13 +23,13 @@ public class RabbitMQConfig {
         return rabbitTemplate;
     }
 
-    @Bean
-    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory() {
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
-        factory.setMessageConverter(jacksonConverter());
-        return factory;
-    }
+//    @Bean
+//    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory() {
+//        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+//        factory.setConnectionFactory(connectionFactory);
+//        factory.setMessageConverter(jacksonConverter());
+//        return factory;
+//    }
 
     @Bean
     public MessageConverter jacksonConverter() {
