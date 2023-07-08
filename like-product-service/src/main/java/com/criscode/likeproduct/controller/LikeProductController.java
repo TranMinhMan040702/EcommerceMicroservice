@@ -1,6 +1,7 @@
 package com.criscode.likeproduct.controller;
 
-import com.criscode.likeproduct.service.LikeProductService;
+import com.criscode.likeproduct.service.ILikeProductService;
+import com.criscode.likeproduct.service.impl.LikeProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class LikeProductController {
 
-    private final LikeProductService likeProductService;
+    private final ILikeProductService likeProductService;
 
     @GetMapping("users/admin/follow-product")
     public ResponseEntity<?> getAllLikeProduct() {

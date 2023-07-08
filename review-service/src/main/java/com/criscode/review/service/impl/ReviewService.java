@@ -1,4 +1,4 @@
-package com.criscode.review.service;
+package com.criscode.review.service.impl;
 
 import com.criscode.clients.order.OrderClient;
 import com.criscode.clients.product.ProductClient;
@@ -7,14 +7,15 @@ import com.criscode.review.converter.ReviewConverter;
 import com.criscode.review.dto.ReviewDto;
 import com.criscode.review.entity.Review;
 import com.criscode.review.repository.ReviewRepository;
+import com.criscode.review.service.IReviewService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class ReviewService {
+public class ReviewService implements IReviewService {
 
     private final String STATUS_ORDER = "DELIVERED";
     private final OrderClient orderClient;
@@ -22,6 +23,7 @@ public class ReviewService {
     private final ReviewConverter reviewConverter;
     private final ReviewRepository reviewRepository;
 
+    @Override
     public ReviewDto saveReview(ReviewDto reviewDto) {
 
         Review review = new Review();
@@ -71,6 +73,7 @@ public class ReviewService {
      * @param userId
      * @return
      */
+    @Override
     public List<ReviewDto> getAllReviewByUser(Integer userId) {
         List<Review> reviews = reviewRepository.findAllByUserId(userId);
         return reviewConverter.mapToDto(reviews);
@@ -80,6 +83,7 @@ public class ReviewService {
      * @param productId
      * @return
      */
+    @Override
     public List<ReviewDto> getAllReviewByProduct(Integer productId) {
         List<Review> reviews = reviewRepository.findAllByProductId(productId);
         return reviewConverter.mapToDto(reviews);

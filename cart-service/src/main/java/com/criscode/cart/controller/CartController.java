@@ -1,9 +1,8 @@
 package com.criscode.cart.controller;
 
-import com.criscode.cart.service.CartService;
+import com.criscode.cart.service.ICartService;
 import com.criscode.clients.cart.dto.CartDto;
 import com.criscode.clients.cart.dto.CartItemDto;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class CartController {
 
-    private final CartService cartService;
+    private final ICartService cartService;
 
     @GetMapping("cart/user/{id}")
     public CartDto findCartByUser(@PathVariable("id") Integer id) {

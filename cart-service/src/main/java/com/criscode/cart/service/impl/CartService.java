@@ -1,4 +1,4 @@
-package com.criscode.cart.service;
+package com.criscode.cart.service.impl;
 
 import com.criscode.cart.converter.CartConverter;
 import com.criscode.cart.converter.CartItemConverter;
@@ -6,8 +6,7 @@ import com.criscode.cart.enitty.Cart;
 import com.criscode.cart.enitty.CartItem;
 import com.criscode.cart.repository.CartItemRepository;
 import com.criscode.cart.repository.CartRepository;
-import com.criscode.clients.cart.CartClient;
-import com.criscode.clients.product.ProductClient;
+import com.criscode.cart.service.ICartService;
 import com.criscode.clients.user.UserClient;
 import com.criscode.clients.cart.dto.CartDto;
 import com.criscode.clients.cart.dto.CartItemDto;
@@ -15,15 +14,16 @@ import com.criscode.clients.user.dto.UserExistResponse;
 import com.criscode.exceptionutils.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Component
 @RequiredArgsConstructor
 @Slf4j
-public class CartService {
+public class CartService implements ICartService {
 
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
@@ -35,6 +35,7 @@ public class CartService {
      * @param cartDto
      * @return
      */
+    @Override
     public CartDto save(CartDto cartDto) {
         log.info("*** CartDto, service; save cart *");
         return cartConverter.map(cartRepository.save(cartConverter.map(cartDto)));
@@ -44,6 +45,7 @@ public class CartService {
      * @param userId
      * @return
      */
+    @Override
     public CartDto findCartByUser(Integer userId) {
         UserExistResponse userExistResponse = userClient.existed(userId);
         if (!userExistResponse.existed()) {
@@ -56,6 +58,7 @@ public class CartService {
      * @param cartItemDto
      * @return
      */
+    @Override
     public CartDto addToCart(CartItemDto cartItemDto) {
         Optional<Cart> cart = cartRepository.findById(cartItemDto.getCartId());
         List<CartItem> cartItems = cart.get().getCartItems();
@@ -79,6 +82,7 @@ public class CartService {
      * @param cartItemId
      * @return
      */
+    @Override
     public CartDto deleteOneItemInCartItem(Integer cartItemId) {
         CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(
                 () -> new NotFoundException("CartItem is not exist with id: " + cartItemId)
@@ -96,6 +100,7 @@ public class CartService {
      * @param cartItemId
      * @return
      */
+    @Override
     public CartDto deleteAllItemInCartItem(Integer cartItemId) {
         CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(
                 () -> new NotFoundException("CartItem is not exist with id: " + cartItemId)
@@ -109,9 +114,10 @@ public class CartService {
     /**
      * @param cartId
      */
+    @Override
     public void clearedCart(Integer cartId) {
         Cart cart = cartRepository.findById(cartId).orElseThrow(
-                ()-> new NotFoundException("Cart does not exist with id: " + cartId)
+                () -> new NotFoundException("Cart does not exist with id: " + cartId)
         );
         cart.getCartItems().clear();
         cartRepository.save(cart);

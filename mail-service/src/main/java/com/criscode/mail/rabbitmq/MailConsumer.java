@@ -1,7 +1,7 @@
 package com.criscode.mail.rabbitmq;
 
 import com.criscode.clients.mail.dto.EmailDetails;
-import com.criscode.mail.service.MailService;
+import com.criscode.mail.service.impl.MailService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

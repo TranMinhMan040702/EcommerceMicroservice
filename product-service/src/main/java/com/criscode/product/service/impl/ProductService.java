@@ -1,11 +1,10 @@
-package com.criscode.product.service;
+package com.criscode.product.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.criscode.clients.order.dto.OrderItemDto;
 import com.criscode.clients.product.dto.ProductDto;
 import com.criscode.clients.product.dto.ProductExistResponse;
-import com.criscode.clients.user.UserClient;
 import com.criscode.exceptionutils.AlreadyExistsException;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.product.constants.ApplicationConstants;
@@ -17,24 +16,24 @@ import com.criscode.product.entity.Product;
 import com.criscode.product.repository.CategoryRepository;
 import com.criscode.product.repository.ImageProductRepository;
 import com.criscode.product.repository.ProductRepository;
+import com.criscode.product.service.IProductService;
 import com.criscode.product.specification.ProductSpecification;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class ProductService {
+public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
     private final ImageProductRepository imageProductRepository;
@@ -48,6 +47,7 @@ public class ProductService {
      * @param files
      * @return
      */
+    @Override
     public ProductDto save(ProductDto productDto, MultipartFile[] files) {
         Optional<Product> pName = productRepository.findByName(productDto.getName());
         if (pName.isPresent()) {
@@ -93,7 +93,8 @@ public class ProductService {
      * @param product
      * @return
      */
-    private ImageProduct saveCloudinary(MultipartFile file, Product product) {
+    @Override
+    public ImageProduct saveCloudinary(MultipartFile file, Product product) {
         ImageProduct image_Product = new ImageProduct();
 
         try {
@@ -118,6 +119,7 @@ public class ProductService {
      * @param search
      * @return
      */
+    @Override
     public ProductPaging findAll(Long categoryId, Integer page, Integer limit, String sortBy,
                                  Double priceMin, Double priceMax, String search) {
 
@@ -135,6 +137,7 @@ public class ProductService {
      * @param id
      * @return
      */
+    @Override
     public ProductDto findById(Integer id) {
         Product product = productRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Not found product with id: " + id));
@@ -148,6 +151,7 @@ public class ProductService {
      * @param priceMax
      * @return
      */
+    @Override
     public List<ProductDto> findByCategory(
             Long categoryId, String search, Double priceMin, Double priceMax) {
 
@@ -164,6 +168,7 @@ public class ProductService {
      * @return
      * @throws Exception
      */
+    @Override
     public Map<String, String> delete(Integer id) {
         Map<String, String> resp = new HashMap<>();
         Product product = productRepository.findById(id).orElseThrow(
@@ -177,6 +182,7 @@ public class ProductService {
     /**
      * @param orderItemDtos
      */
+    @Override
     public void updateQuantityAndSoldProduct(List<OrderItemDto> orderItemDtos) {
         orderItemDtos.stream().forEach(orderItemDto -> {
             Product product = productRepository.findById(orderItemDto.getProductId()).orElseThrow(
@@ -192,6 +198,7 @@ public class ProductService {
      * @param productId
      * @return
      */
+    @Override
     public Integer quantityOfProduct(Integer productId) {
         Product product = productRepository.findById(productId).orElseThrow(
                 () -> new NotFoundException("Product not exist with id: " + productId)
@@ -203,6 +210,7 @@ public class ProductService {
      * @param productId
      * @return
      */
+    @Override
     public ProductExistResponse existed(Integer productId) {
         return productRepository.findById(productId).isPresent()
                 ? new ProductExistResponse(true)
@@ -213,6 +221,7 @@ public class ProductService {
      * @param ids
      * @return
      */
+    @Override
     public List<ProductDto> getAllProductLiked(String[] ids) {
         return Arrays.stream(ids).map(id -> findById(Integer.parseInt(id))).collect(Collectors.toList());
     }
@@ -221,6 +230,7 @@ public class ProductService {
      * @param productId
      * @param rating
      */
+    @Override
     public void updateRatingProduct(Integer productId, Integer rating) {
         Product product = productRepository.findById(productId).orElseThrow(
                 () -> new NotFoundException("Product not exist with id: " + productId)

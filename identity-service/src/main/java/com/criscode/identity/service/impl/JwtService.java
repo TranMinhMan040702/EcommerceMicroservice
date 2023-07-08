@@ -1,4 +1,4 @@
-package com.criscode.identity.service;
+package com.criscode.identity.service.impl;
 
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.Jwts;

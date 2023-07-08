@@ -1,4 +1,4 @@
-package com.criscode.identity.service;
+package com.criscode.identity.service.impl;
 
 import com.criscode.amqp.RabbitMQMessageProducer;
 import com.criscode.clients.cart.CartClient;
@@ -6,8 +6,6 @@ import com.criscode.clients.cart.dto.CartDto;
 import com.criscode.clients.mail.OtpClient;
 import com.criscode.clients.mail.dto.CheckOtpResponse;
 import com.criscode.clients.mail.dto.EmailDetails;
-import com.criscode.clients.product.ProductClient;
-import com.criscode.clients.user.UserClient;
 import com.criscode.exceptionutils.AlreadyExistsException;
 import com.criscode.identity.config.CustomUserDetailsService;
 import com.criscode.identity.converter.UserConverter;
@@ -17,21 +15,23 @@ import com.criscode.identity.dto.EmailCheckExistResponse;
 import com.criscode.identity.dto.RegisterRequest;
 import com.criscode.identity.entity.User;
 import com.criscode.identity.repository.UserRepository;
+import com.criscode.identity.service.IAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-@Service
+@Component
 @RequiredArgsConstructor
 @Transactional
-public class AuthService {
+public class AuthService implements IAuthService {
 
     private final UserRepository userRepository;
     private final CustomUserDetailsService userDetailsService;
@@ -44,6 +44,7 @@ public class AuthService {
     private String EXCHANGE = "internal.exchange";
     private String ROUTIN_KEY = "internal.mail.routing-key";
 
+    @Override
     public AuthResponse saveUser(RegisterRequest registerRequest, String code) {
 
         CheckOtpResponse checkOtpResponse = otpClient.checkOtp(code, registerRequest.getEmail());
@@ -64,6 +65,7 @@ public class AuthService {
         }
     }
 
+    @Override
     public void sendEmail(String email) {
         if (emailCheckExistResponse(email).existed()) {
             throw new AlreadyExistsException("Email already exist: " + email);
@@ -75,6 +77,7 @@ public class AuthService {
         );
     }
 
+    @Override
     public EmailCheckExistResponse emailCheckExistResponse(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         return user.isPresent()
@@ -82,6 +85,7 @@ public class AuthService {
                 : new EmailCheckExistResponse(false);
     }
 
+    @Override
     public AuthResponse authenticate(AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())

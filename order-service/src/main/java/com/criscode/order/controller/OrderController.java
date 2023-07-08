@@ -2,24 +2,25 @@ package com.criscode.order.controller;
 
 import com.criscode.order.constants.ApplicationConstants;
 import com.criscode.order.dto.OrderDto;
-import com.criscode.order.service.OrderService;
+import com.criscode.order.service.IOrderService;
+import com.criscode.order.service.impl.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final OrderService orderService;
+    private final IOrderService orderService;
 
-    @PostMapping("order")
+    @PostMapping("/order")
     public ResponseEntity<?> createOrder(@RequestBody OrderDto dto) {
         return ResponseEntity.ok(orderService.createOrder(dto));
     }
 
-    @GetMapping("admin/order")
+    @GetMapping("/admin/order")
     public ResponseEntity<?> getAllOrderByStatus(
             @RequestParam(required = false) String status,
             @RequestParam(defaultValue = "0", required = false) Integer page,
@@ -30,7 +31,7 @@ public class OrderController {
                 status, page, limit, sortBy, search));
     }
 
-    @GetMapping("admin/order/top-5-latest")
+    @GetMapping("/admin/order/top-5-latest")
     public ResponseEntity<?> getTop5OrderLatest(
             @RequestParam(defaultValue = "0", required = false) Integer page,
             @RequestParam(defaultValue = ApplicationConstants.DEFAULT_LIMIT_SIZE_PAGE, required = false) Integer limit,

@@ -1,13 +1,13 @@
 package com.criscode.product.controller;
 
-import com.criscode.clients.likeproduct.dto.LikeProductDto;
 import com.criscode.clients.order.dto.OrderItemDto;
 import com.criscode.clients.product.dto.ProductDto;
 import com.criscode.clients.product.dto.ProductExistResponse;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.product.constants.ApplicationConstants;
 import com.criscode.product.repository.ProductRepository;
-import com.criscode.product.service.ProductService;
+import com.criscode.product.service.IProductService;
+import com.criscode.product.service.impl.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,16 +24,16 @@ import java.util.List;
 public class ProductController {
 
     private final ObjectMapper objectMapper;
-    private final ProductService productService;
+    private final IProductService productService;
     private final ProductRepository productRepository;
 
-    @GetMapping("product")
+    @GetMapping("/product")
     @ResponseStatus(HttpStatus.OK)
     public ProductDto getProductById(@RequestParam("id") Integer id){
         return productService.findById(id);
     }
 
-    @GetMapping("products")
+    @GetMapping("/products")
     public ResponseEntity<?> findAll(
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false, defaultValue = "0") Integer page,
@@ -48,7 +48,7 @@ public class ProductController {
         );
     }
 
-    @GetMapping("products/category/{id}")
+    @GetMapping("/products/category/{id}")
     public ResponseEntity<?> getProductByCategory(
             @PathVariable Long id,
             @RequestParam(required = false) String search,

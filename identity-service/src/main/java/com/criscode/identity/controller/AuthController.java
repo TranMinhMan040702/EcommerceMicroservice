@@ -1,7 +1,8 @@
 package com.criscode.identity.controller;
 
 import com.criscode.identity.dto.RegisterRequest;
-import com.criscode.identity.service.AuthService;
+import com.criscode.identity.service.IAuthService;
+import com.criscode.identity.service.impl.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthService authService;
+    private final IAuthService authService;
 
     @PostMapping("/register")
     public void register(@RequestParam("email") String email) {

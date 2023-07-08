@@ -1,7 +1,8 @@
 package com.criscode.review.controller;
 
 import com.criscode.review.dto.ReviewDto;
-import com.criscode.review.service.ReviewService;
+import com.criscode.review.service.IReviewService;
+import com.criscode.review.service.impl.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReviewController {
 
-    private final ReviewService reviewService;
+    private final IReviewService reviewService;
 
     @GetMapping("/review/product/{productId}")
     public ResponseEntity<?> getAllReviewByProduct(@PathVariable("productId") Integer productId) {
