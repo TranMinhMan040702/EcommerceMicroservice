@@ -1,4 +1,4 @@
-package com.criscode.order.service;
+package com.criscode.order.service.impl;
 
 import com.criscode.clients.cart.CartClient;
 import com.criscode.clients.product.ProductClient;
@@ -10,6 +10,7 @@ import com.criscode.order.converter.OrderConverter;
 import com.criscode.order.dto.OrderDto;
 import com.criscode.order.entity.Order;
 import com.criscode.order.repository.OrderRepository;
+import com.criscode.order.service.IOrderService;
 import com.criscode.order.specification.OrderSpecification;
 import com.criscode.order.utils.HandleStatusOrder;
 import lombok.RequiredArgsConstructor;
@@ -17,17 +18,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 @RequiredArgsConstructor
 @Transactional
-public class OrderService {
+public class OrderService implements IOrderService {
 
     private final OrderRepository orderRepository;
     private final OrderConverter orderConverter;
@@ -43,6 +44,7 @@ public class OrderService {
      * @param search
      * @return
      */
+    @Override
     public List<OrderDto> findAllOrdersByStatusWithPaginationAndSort(
             String status, Integer page, Integer limit, String sortBy, String search) {
 
@@ -64,6 +66,7 @@ public class OrderService {
      * @param userId
      * @return
      */
+    @Override
     public List<OrderDto> findAllOrdersByUser(Integer userId) {
         // todo: check order with order of user current
         UserExistResponse userExistResponse = userClient.existed(userId);
@@ -79,6 +82,7 @@ public class OrderService {
      * @param orderId
      * @return
      */
+    @Override
     public OrderDto findOrderById(Integer orderId) {
         // todo: check order with order of user current
         Order order = orderRepository.findById(orderId).orElseThrow(
@@ -92,6 +96,7 @@ public class OrderService {
      * @param status
      * @return
      */
+    @Override
     public List<OrderDto> findOrderByStatus(Integer userId, String status) {
         // todo: check order with order of user current
         // todo: check user id with user current
@@ -104,6 +109,7 @@ public class OrderService {
      * @param orderDto
      * @return
      */
+    @Override
     public OrderDto createOrder(OrderDto orderDto) {
         // todo: check order with order of user current
         // todo: check quantity product
@@ -129,6 +135,7 @@ public class OrderService {
      * @param status
      * @return
      */
+    @Override
     public List<OrderDto> updateStatus(Integer orderId, String status) {
         // todo: check order with order of user current
         Order order = orderRepository.findById(orderId).orElseThrow(
@@ -143,6 +150,7 @@ public class OrderService {
      * @param orderId
      * @return
      */
+    @Override
     public List<OrderDto> deleteOrder(Integer orderId) {
         // todo: check order with order of user current
         Order order = orderRepository.findById(orderId).orElseThrow(
@@ -152,6 +160,7 @@ public class OrderService {
         return findAllOrdersByUser(order.getUserId());
     }
 
+    @Override
     public String getStatusOrder(Integer orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new NotFoundException("Order does not exist with id: " + orderId)

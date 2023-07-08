@@ -1,10 +1,9 @@
 package com.criscode.notification.rabbitmq;
 
 import com.criscode.clients.mail.dto.EmailDetails;
-import com.criscode.notification.service.NotificationService;
+import com.criscode.notification.service.impl.NotificationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 @Service

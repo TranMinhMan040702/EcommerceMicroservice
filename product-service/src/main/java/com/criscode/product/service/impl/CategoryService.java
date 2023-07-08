@@ -1,4 +1,4 @@
-package com.criscode.product.service;
+package com.criscode.product.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -8,8 +8,9 @@ import com.criscode.product.converter.CategoryConverter;
 import com.criscode.product.dto.CategoryDto;
 import com.criscode.product.entity.Category;
 import com.criscode.product.repository.CategoryRepository;
+import com.criscode.product.service.ICategoryService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -19,14 +20,15 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 @AllArgsConstructor
-public class CategoryService {
+public class CategoryService implements ICategoryService {
 
     private final CategoryRepository categoryRepository;
     private final Cloudinary cloudinary;
     private CategoryConverter categoryConverter;
 
+    @Override
     public CategoryDto save(CategoryDto categoryDto, MultipartFile file) {
 
         Optional<Category> c = categoryRepository.findByName(categoryDto.getName());
@@ -52,6 +54,7 @@ public class CategoryService {
         return categoryConverter.map(categoryRepository.save(category));
     }
 
+    @Override
     public List<CategoryDto> findAll() {
         List<Category> categoryDtos = categoryRepository.findAll();
         return categoryDtos.stream().map(
@@ -59,6 +62,7 @@ public class CategoryService {
         ).collect(Collectors.toList());
     }
 
+    @Override
     public Map<String, String> deleteOne(Integer id) {
         Optional<Category> category = Optional.ofNullable(categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Category not exist with id: " + id)));
@@ -68,7 +72,8 @@ public class CategoryService {
 
     // todo: delete soft
 
-    private String saveImageCloudinary(MultipartFile file) {
+    @Override
+    public String saveImageCloudinary(MultipartFile file) {
         Map<?, ?> r;
         try {
             r = this.cloudinary.uploader().upload(file.getBytes(),

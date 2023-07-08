@@ -1,8 +1,7 @@
-package com.criscode.likeproduct.service;
+package com.criscode.likeproduct.service.impl;
 
 import com.criscode.clients.likeproduct.dto.LikeProductDto;
 import com.criscode.clients.product.ProductClient;
-import com.criscode.clients.product.dto.ProductDto;
 import com.criscode.clients.product.dto.ProductExistResponse;
 import com.criscode.clients.user.UserClient;
 import com.criscode.clients.user.dto.UserDto;
@@ -10,16 +9,16 @@ import com.criscode.clients.user.dto.UserExistResponse;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.likeproduct.entity.LikeProduct;
 import com.criscode.likeproduct.repository.LikeProductRepository;
+import com.criscode.likeproduct.service.ILikeProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class LikeProductService {
+public class LikeProductService implements ILikeProductService {
 
     private final UserClient userClient;
     private final ProductClient productClient;
@@ -30,6 +29,7 @@ public class LikeProductService {
      * @param productId
      * @return
      */
+    @Override
     public LikeProductDto likeProduct(Integer userId, Integer productId) {
 
         LikeProduct likeProduct = likeProductRepository.findByUserIdAndProductId(userId, productId);
@@ -57,6 +57,7 @@ public class LikeProductService {
      * @param productId
      * @return
      */
+    @Override
     public LikeProductDto unLikeProduct(Integer userId, Integer productId) {
         checkExisted(userId, productId);
         likeProductRepository.delete(likeProductRepository.findByUserIdAndProductId(userId, productId));
@@ -82,6 +83,7 @@ public class LikeProductService {
      * @param userId
      * @return
      */
+    @Override
     public LikeProductDto findLikeProductByUser(Integer userId) {
 
         UserExistResponse userExistResponse = userClient.existed(userId);
@@ -103,6 +105,7 @@ public class LikeProductService {
     /**
      * @return
      */
+    @Override
     public List<LikeProductDto> findAllLikeProduct() {
         List<UserDto> userDtos = userClient.findAll();
         if (userDtos == null) {

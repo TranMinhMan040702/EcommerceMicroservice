@@ -1,4 +1,4 @@
-package com.criscode.identity.service;
+package com.criscode.identity.service.impl;
 
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.identity.converter.AddressConverter;
@@ -7,25 +7,29 @@ import com.criscode.identity.entity.Address;
 import com.criscode.identity.entity.User;
 import com.criscode.identity.repository.AddressRepository;
 import com.criscode.identity.repository.UserRepository;
+import com.criscode.identity.service.IAddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class AddressService {
+public class AddressService implements IAddressService {
 
     private final AddressRepository addressRepository;
     private final UserRepository userRepository;
     private final AddressConverter addressConverter;
 
+    @Override
     public List<AddressDto> findAddressByUserId(Integer userId) {
         // todo: check user id with user current
         return addressConverter.mapToDto(userRepository.findById(userId).get().getAddresses());
     }
 
+    @Override
     public List<AddressDto> saveAddressByUserId(AddressDto addressDto) {
         // todo: check user id with user current
         User user = userRepository.findById(addressDto.getUserId()).orElseThrow(
@@ -50,7 +54,8 @@ public class AddressService {
         return addressConverter.mapToDto(userRepository.save(user).getAddresses());
     }
 
-    private void updateStatusAddress(User user) {
+    @Override
+    public void updateStatusAddress(User user) {
         Address address = addressRepository.findByStatusAndUser(true, user);
         if (address != null) {
             address.setStatus(false);
@@ -58,6 +63,7 @@ public class AddressService {
         }
     }
 
+    @Override
     public List<AddressDto> deleteAddressById(Integer addressId) {
         Address address = addressRepository.findById(addressId).orElseThrow(
                 () -> new NotFoundException("Address does not exist with id: " + addressId)

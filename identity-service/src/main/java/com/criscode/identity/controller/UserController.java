@@ -5,8 +5,10 @@ import com.criscode.clients.user.dto.UserExistResponse;
 import com.criscode.clients.user.dto.AddressDto;
 import com.criscode.clients.user.dto.UserReviewDto;
 import com.criscode.identity.constants.ApplicationConstants;
-import com.criscode.identity.service.AddressService;
-import com.criscode.identity.service.UserService;
+import com.criscode.identity.service.IAddressService;
+import com.criscode.identity.service.IUserService;
+import com.criscode.identity.service.impl.AddressService;
+import com.criscode.identity.service.impl.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
-    private final AddressService addressService;
+    private final IUserService userService;
+    private final IAddressService addressService;
     private final ObjectMapper objectMapper;
 
     @GetMapping("user-check/{userid}")

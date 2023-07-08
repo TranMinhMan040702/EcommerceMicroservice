@@ -3,7 +3,8 @@ package com.criscode.order.controller;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.order.dto.DeliveryDto;
 import com.criscode.order.repository.DeliveryRepository;
-import com.criscode.order.service.DeliveryService;
+import com.criscode.order.service.IDeliveryService;
+import com.criscode.order.service.impl.DeliveryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,14 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class DeliveryController {
 
-    private final DeliveryService deliveryService;
+    private final IDeliveryService deliveryService;
     private final DeliveryRepository deliveryRepository;
 
-    @GetMapping("deliveries")
+    @GetMapping("/deliveries")
     public ResponseEntity<?> findAllDelivery() {
         return ResponseEntity.ok(deliveryService.findAll());
     }

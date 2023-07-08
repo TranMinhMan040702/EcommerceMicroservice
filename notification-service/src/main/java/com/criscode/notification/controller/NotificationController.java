@@ -1,7 +1,8 @@
 package com.criscode.notification.controller;
 
 import com.criscode.clients.notification.dto.NotificationDto;
-import com.criscode.notification.service.NotificationService;
+import com.criscode.notification.service.INotificationService;
+import com.criscode.notification.service.impl.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class NotificationController {
 
-    private final NotificationService notificationService;
+    private final INotificationService notificationService;
 
     @PostMapping("/send-notification")
     void sendNotification(@RequestBody NotificationDto notificationDto) {

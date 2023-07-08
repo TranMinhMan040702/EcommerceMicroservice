@@ -1,7 +1,8 @@
 package com.criscode.product.controller;
 
 import com.criscode.product.dto.CategoryDto;
-import com.criscode.product.service.CategoryService;
+import com.criscode.product.service.ICategoryService;
+import com.criscode.product.service.impl.CategoryService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -9,15 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 @AllArgsConstructor
 public class CategoryController {
 
-    private final CategoryService categoryService;
+    private final ICategoryService categoryService;
     private final ObjectMapper objectMapper;
 
     @PostMapping("/admin/categorise")

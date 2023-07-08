@@ -1,6 +1,7 @@
-package com.criscode.mail.service;
+package com.criscode.mail.service.impl;
 
 import com.criscode.clients.mail.dto.EmailDetails;
+import com.criscode.mail.service.IMailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,15 +9,15 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import java.nio.charset.StandardCharsets;
 
-@Service
+@Component
 @Slf4j
 @RequiredArgsConstructor
-public class MailService {
+public class MailService implements IMailService {
 
     private final JavaMailSender javaMailSender;
     private final OtpService otpService;
@@ -24,6 +25,7 @@ public class MailService {
     @Value("${spring.mail.username}")
     private String sender;
 
+    @Override
     @Async
     public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
         var mimeMessage = javaMailSender.createMimeMessage();
@@ -41,6 +43,7 @@ public class MailService {
         }
     }
 
+    @Override
     @Async
     public void sendActivationEmail(EmailDetails emailDetails) {
 
