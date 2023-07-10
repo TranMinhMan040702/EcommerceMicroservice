@@ -27,12 +27,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
@@ -188,8 +190,9 @@ public class ProductService implements IProductService {
             Product product = productRepository.findById(orderItemDto.getProductId()).orElseThrow(
                     () -> new NotFoundException("Product not exist with id: " + orderItemDto.getProductId())
             );
+            Integer sold = product.getSold() == null ? 0 : product.getSold();
             product.setQuantity(product.getQuantity() - orderItemDto.getCount());
-            product.setSold(product.getSold()+ orderItemDto.getCount());
+            product.setSold(sold + orderItemDto.getCount());
             productRepository.save(product);
         });
     }

@@ -1,5 +1,7 @@
 package com.criscode.clients.order.dto;
 
+import com.criscode.clients.product.dto.ProductDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -18,6 +20,8 @@ public class OrderItemDto {
     private Integer orderId;
     @NotBlank
     private Integer productId;
+    @JsonProperty("product")
+    private ProductDto productDto;
     private Boolean rating;
 
 }

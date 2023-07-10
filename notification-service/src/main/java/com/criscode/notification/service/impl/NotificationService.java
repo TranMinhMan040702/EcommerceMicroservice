@@ -48,7 +48,7 @@ public class NotificationService implements INotificationService {
     public List<NotificationDto> findByRecipientIdTop5(Integer recipientId) {
         PageRequest pageRequest = PageRequest.of(0, 5);
         return notificationConverter.mapToDto(
-                notificationRepository.findAllByRecipientIdOrOrderByTimestampDesc(recipientId, pageRequest)
+                notificationRepository.findAllByRecipientIdOrderByTimestampDesc(recipientId, pageRequest)
         );
     }
 
