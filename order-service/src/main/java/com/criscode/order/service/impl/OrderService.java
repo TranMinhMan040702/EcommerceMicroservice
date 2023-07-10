@@ -110,7 +110,7 @@ public class OrderService implements IOrderService {
      * @return
      */
     @Override
-    public OrderDto createOrder(OrderDto orderDto) {
+    public void createOrder(OrderDto orderDto) {
         // todo: check order with order of user current
         // todo: check quantity product
         orderDto.getOrderItemDtos().stream().forEach(
@@ -126,7 +126,6 @@ public class OrderService implements IOrderService {
         productClient.updateQuantityAndSoldProduct(orderDto.getOrderItemDtos());
         // todo: clear cart
         cartClient.clearedCart(cartClient.findCartByUser(orderDto.getUserId()).getId());
-        return orderConverter.mapToDto(order);
     }
 
 

@@ -26,7 +26,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -42,7 +46,7 @@ public class AuthService implements IAuthService {
     private final OtpClient otpClient;
     private final RabbitMQMessageProducer producer;
     private String EXCHANGE = "internal.exchange";
-    private String ROUTIN_KEY = "internal.mail.routing-key";
+    private String ROUTING_KEY = "internal.mail.routing-key";
 
     @Override
     public AuthResponse saveUser(RegisterRequest registerRequest, String code) {
@@ -73,7 +77,7 @@ public class AuthService implements IAuthService {
         producer.publish(
                 EmailDetails.builder().recipient(email).build(),
                 EXCHANGE,
-                ROUTIN_KEY
+                ROUTING_KEY
         );
     }
 
@@ -94,9 +98,13 @@ public class AuthService implements IAuthService {
         // Xem lại refresh token and user_id
         if (authentication.isAuthenticated()) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());
+            User user = userRepository.findByEmail(authRequest.getEmail()).get();
+            Set<String> roles = user.getRoles().stream().map(role -> role.getRole()).collect(Collectors.toSet());
             return AuthResponse.builder()
                     .status(HttpStatus.OK.value())
                     .accessToken(jwtService.generateToken(userDetails))
+                    .roles(roles)
+                    .userId(user.getId())
                     .build();
         } else {
             return AuthResponse.builder()

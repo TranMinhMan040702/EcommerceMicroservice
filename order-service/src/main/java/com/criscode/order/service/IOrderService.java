@@ -16,7 +16,7 @@ public interface IOrderService {
 
     List<OrderDto> findOrderByStatus(Integer userId, String status);
 
-    OrderDto createOrder(OrderDto orderDto);
+    void createOrder(OrderDto orderDto);
 
     List<OrderDto> updateStatus(Integer orderId, String status);
 

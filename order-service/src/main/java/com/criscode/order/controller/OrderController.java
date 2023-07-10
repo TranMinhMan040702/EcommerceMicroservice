@@ -10,14 +10,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
 @RequiredArgsConstructor
 public class OrderController {
 
     private final IOrderService orderService;
 
     @PostMapping("/order")
-    public ResponseEntity<?> createOrder(@RequestBody OrderDto dto) {
-        return ResponseEntity.ok(orderService.createOrder(dto));
+    public void createOrder(@RequestBody OrderDto dto) {
+        orderService.createOrder(dto);
     }
 
     @GetMapping("/admin/order")
