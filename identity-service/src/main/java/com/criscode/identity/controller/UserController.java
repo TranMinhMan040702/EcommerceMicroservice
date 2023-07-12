@@ -3,12 +3,10 @@ package com.criscode.identity.controller;
 import com.criscode.clients.user.dto.UserDto;
 import com.criscode.clients.user.dto.UserExistResponse;
 import com.criscode.clients.user.dto.AddressDto;
-import com.criscode.clients.user.dto.UserReviewDto;
+import com.criscode.clients.user.dto.UserResponse;
 import com.criscode.identity.constants.ApplicationConstants;
 import com.criscode.identity.service.IAddressService;
 import com.criscode.identity.service.IUserService;
-import com.criscode.identity.service.impl.AddressService;
-import com.criscode.identity.service.impl.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -76,9 +74,9 @@ public class UserController {
         return ResponseEntity.ok(addressService.deleteAddressById(addressId));
     }
 
-    @GetMapping("get-user-review/{userId}")
-    public UserReviewDto getUserReview(@PathVariable("userId") Integer userId) {
-        return userService.getUserReview(userId);
+    @GetMapping("get-user/{userId}")
+    public UserResponse getUser(@PathVariable("userId") Integer userId) {
+        return userService.getUser(userId);
     }
 
 }

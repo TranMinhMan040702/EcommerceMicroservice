@@ -24,7 +24,7 @@ public class ReviewConverter {
     public ReviewDto mapToDto(Review review) {
         ReviewDto reviewDto = new ReviewDto();
         BeanUtils.copyProperties(review, reviewDto);
-        reviewDto.setUser(userClient.getUserReview(review.getUserId()));
+        reviewDto.setUser(userClient.getUser(review.getUserId()));
         return reviewDto;
     }
 

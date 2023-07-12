@@ -2,11 +2,9 @@ package com.criscode.websocket.controller;
 
 import com.criscode.clients.notification.dto.NotificationDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -17,6 +15,6 @@ public class MessagesController {
 
     @PostMapping("/websocket/send-notification")
     public void processMessage(@RequestBody NotificationDto notificationDto) {
-        simpMessagingTemplate.convertAndSend("/topic/" + notificationDto.getRecipientId() + ",messages", notificationDto);
+        simpMessagingTemplate.convertAndSend("/topic/notification", notificationDto);
     }
 }

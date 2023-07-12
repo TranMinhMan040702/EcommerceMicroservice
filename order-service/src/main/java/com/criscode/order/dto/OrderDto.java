@@ -1,6 +1,7 @@
 package com.criscode.order.dto;
 
 import com.criscode.clients.order.dto.OrderItemDto;
+import com.criscode.clients.user.dto.UserResponse;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -30,6 +31,9 @@ public class OrderDto {
 
     @NotBlank
     private Integer userId;
+
+    @JsonProperty("user")
+    private UserResponse userResponse;
 
     @JsonProperty("orderItems")
     private List<OrderItemDto> orderItemDtos;

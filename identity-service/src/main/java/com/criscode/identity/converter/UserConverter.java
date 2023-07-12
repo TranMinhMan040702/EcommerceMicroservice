@@ -2,7 +2,6 @@ package com.criscode.identity.converter;
 
 import com.criscode.clients.cart.CartClient;
 import com.criscode.clients.user.dto.UserDto;
-import com.criscode.clients.user.dto.UserReviewDto;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.identity.dto.RegisterRequest;
 import com.criscode.identity.dto.UserPaging;
@@ -17,10 +16,8 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component

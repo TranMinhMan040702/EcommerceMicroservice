@@ -2,7 +2,7 @@ package com.criscode.identity.service;
 
 import com.criscode.clients.user.dto.UserDto;
 import com.criscode.clients.user.dto.UserExistResponse;
-import com.criscode.clients.user.dto.UserReviewDto;
+import com.criscode.clients.user.dto.UserResponse;
 import com.criscode.identity.dto.UserPaging;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,7 +18,7 @@ public interface IUserService {
 
     List<UserDto> findAll();
 
-    UserReviewDto getUserReview(Integer userId);
+    UserResponse getUser(Integer userId);
 
     UserDto findOneByUserId(Integer userId);
 

@@ -1,17 +1,22 @@
 package com.criscode.order.service.impl;
 
 import com.criscode.clients.cart.CartClient;
+import com.criscode.clients.notification.NotificationClient;
+import com.criscode.clients.notification.dto.NotificationDto;
 import com.criscode.clients.product.ProductClient;
 import com.criscode.clients.user.UserClient;
 import com.criscode.clients.user.dto.UserExistResponse;
+import com.criscode.clients.websocket.NotificationSocketClient;
 import com.criscode.exceptionutils.InvalidDataException;
 import com.criscode.exceptionutils.NotFoundException;
+import com.criscode.order.constants.ApplicationConstants;
 import com.criscode.order.converter.OrderConverter;
 import com.criscode.order.dto.OrderDto;
 import com.criscode.order.entity.Order;
 import com.criscode.order.repository.OrderRepository;
 import com.criscode.order.service.IOrderService;
 import com.criscode.order.specification.OrderSpecification;
+import com.criscode.order.utils.CreateNotification;
 import com.criscode.order.utils.HandleStatusOrder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +28,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -35,6 +41,8 @@ public class OrderService implements IOrderService {
     private final ProductClient productClient;
     private final CartClient cartClient;
     private final UserClient userClient;
+    private final NotificationClient notificationClient;
+    private final NotificationSocketClient notificationSocketClient;
 
     /**
      * @param status
@@ -140,9 +148,20 @@ public class OrderService implements IOrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new NotFoundException("Order does not exist with id: " + orderId)
         );
+        if (status.equals(ApplicationConstants.DELIVERED)) {
+            sendNotification(orderId, order.getUserId());
+        }
         order.setStatus(HandleStatusOrder.handleStatus(status));
         orderRepository.save(order);
         return findAllOrdersByUser(order.getId());
+    }
+
+    private void sendNotification(Integer orderId, Integer userId) {
+        NotificationDto notificationDto = CreateNotification.delivered(orderId, userId);
+        // todo: push rabbitmq
+        notificationClient.sendNotification(notificationDto);
+        // todo: send to user
+        notificationSocketClient.processMessage(notificationDto);
     }
 
     /**

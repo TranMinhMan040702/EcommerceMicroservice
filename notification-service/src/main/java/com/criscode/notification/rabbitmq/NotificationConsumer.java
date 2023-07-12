@@ -1,9 +1,7 @@
 package com.criscode.notification.rabbitmq;
 
-import com.criscode.clients.mail.dto.EmailDetails;
 import com.criscode.clients.notification.dto.NotificationDto;
-import com.criscode.clients.websocket.WebSocketClient;
-import com.criscode.notification.service.impl.NotificationService;
+import com.criscode.notification.service.INotificationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -14,12 +12,12 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class NotificationConsumer {
 
-    private final WebSocketClient webSocketClient;
+    private final INotificationService notificationService;
 
     @RabbitListener(queues = "${rabbitmq.queue.notification}")
     public void consumer(NotificationDto notificationDto) {
         log.info("Consumed {} from queue", notificationDto);
-        webSocketClient.processMessage(notificationDto);
+        notificationService.save(notificationDto);
     }
 
 }

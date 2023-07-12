@@ -1,5 +1,6 @@
 package com.criscode.order.converter;
 
+import com.criscode.clients.user.UserClient;
 import com.criscode.order.dto.OrderDto;
 import com.criscode.order.entity.Delivery;
 import com.criscode.order.entity.Order;
@@ -15,6 +16,7 @@ public class OrderConverter {
 
     private final DeliveryConverter deliveryConverter;
     private final OrderItemConverter orderItemConverter;
+    private final UserClient userClient;
 
     public Order mapToEntity(OrderDto orderDto) {
         Order order = new Order();
@@ -30,8 +32,9 @@ public class OrderConverter {
     public OrderDto mapToDto(Order order) {
         OrderDto orderDto = new OrderDto();
         BeanUtils.copyProperties(order, orderDto);
+        orderDto.setUserResponse(userClient.getUser(order.getUserId()));
         orderDto.setDeliveryDto(deliveryConverter.mapToDto(order.getDelivery()));
-        orderDto.setStatus(orderDto.getStatus());
+        orderDto.setStatus(order.getStatus().toString());
         orderDto.setOrderItemDtos(orderItemConverter.mapToDto(order.getOrderItems()));
         return orderDto;
     }
