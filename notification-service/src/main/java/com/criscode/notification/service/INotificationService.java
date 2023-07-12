@@ -9,6 +9,8 @@ import java.util.List;
 public interface INotificationService {
     void sendNotification(NotificationDto notificationDto);
 
+    void save(NotificationDto notificationDto);
+
     List<NotificationDto> findByRecipientId(Integer recipientId);
 
     List<NotificationDto> findByRecipientIdTop5(Integer recipientId);

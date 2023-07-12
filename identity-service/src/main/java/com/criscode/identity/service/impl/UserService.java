@@ -4,7 +4,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.criscode.clients.user.dto.UserDto;
 import com.criscode.clients.user.dto.UserExistResponse;
-import com.criscode.clients.user.dto.UserReviewDto;
+import com.criscode.clients.user.dto.UserResponse;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.identity.converter.UserConverter;
 import com.criscode.identity.dto.UserPaging;
@@ -20,6 +20,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.Map;
 
 @Component
 @AllArgsConstructor
+@Transactional
 public class UserService implements IUserService {
 
     private final UserRepository userRepository;
@@ -57,14 +59,14 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserReviewDto getUserReview(Integer userId) {
+    public UserResponse getUser(Integer userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new NotFoundException("User does not exist with id: " + userId)
         );
-        return UserReviewDto.builder()
+        return UserResponse.builder()
                 .id(user.getId())
-                .firstname(user.getFirstName())
-                .lastname(user.getLastName())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .avatar(user.getAvatar())
                 .build();
     }

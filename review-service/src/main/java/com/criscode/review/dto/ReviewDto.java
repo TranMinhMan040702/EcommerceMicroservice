@@ -1,6 +1,6 @@
 package com.criscode.review.dto;
 
-import com.criscode.clients.user.dto.UserReviewDto;
+import com.criscode.clients.user.dto.UserResponse;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +14,7 @@ public class ReviewDto {
 
 	private Integer rating;
 
-	private UserReviewDto user;
+	private UserResponse user;
 	
 	private Integer orderId;
 

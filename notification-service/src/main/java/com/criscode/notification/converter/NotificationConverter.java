@@ -18,7 +18,7 @@ public class NotificationConverter {
                 .message(notificationDto.getMessage())
                 .recipientId(notificationDto.getRecipientId())
                 .status(notificationDto.getStatus())
-                .timestamp(new Date())
+                .timestamp(notificationDto.getTimestamp())
                 .build();
     }
 

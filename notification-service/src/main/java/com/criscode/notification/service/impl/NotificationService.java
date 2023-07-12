@@ -31,10 +31,12 @@ public class NotificationService implements INotificationService {
     @Override
     public void sendNotification(NotificationDto notificationDto) {
         log.info("Push notification {}", notificationDto);
-        //todo: save notification
-        notificationRepository.save(notificationConverter.mapToEntity(notificationDto));
-        //todo: push notification into rabbitmq
         producer.publish(notificationDto, exchange, routing_key);
+    }
+
+    @Override
+    public void save(NotificationDto notificationDto) {
+        notificationRepository.save(notificationConverter.mapToEntity(notificationDto));
     }
 
     @Override
@@ -44,6 +46,7 @@ public class NotificationService implements INotificationService {
         );
     }
 
+    // Error, hasn't date => create date
     @Override
     public List<NotificationDto> findByRecipientIdTop5(Integer recipientId) {
         PageRequest pageRequest = PageRequest.of(0, 5);
