@@ -12,9 +12,9 @@ import javax.validation.Valid;
 
 @FeignClient(name = "cart")
 public interface CartClient {
-    @PostMapping("/api/v1/create-cart")
+    @PostMapping("/api/v1/cart/create-cart")
     CartDto save(@RequestBody @Valid CartDto cartDto);
-    @PostMapping("/api/v1/clear-cart/{cartId}")
+    @PostMapping("/api/v1/cart/clear-cart/{cartId}")
     void clearedCart(@PathVariable("cartId") Integer cartId);
     @GetMapping("/api/v1/cart/user/{id}")
     CartDto findCartByUser(@PathVariable("id") Integer id);

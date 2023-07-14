@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/identity-service/user/")
 @CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
 @RequiredArgsConstructor
 public class UserController {
@@ -44,12 +44,12 @@ public class UserController {
         return userService.findAll();
     }
 
-    @GetMapping("users/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findOneByUserId(@PathVariable Integer id) {
         return ResponseEntity.ok(userService.findOneByUserId(id));
     }
 
-    @PostMapping("users")
+    @PostMapping("/")
     public ResponseEntity<?> updateUser(
             @RequestParam("model") String JsonObject,
             @RequestParam(name = "file", required = false) MultipartFile file) throws Exception {
@@ -59,22 +59,22 @@ public class UserController {
     }
 
     // Address
-    @GetMapping("users/addresses/{userId}")
+    @GetMapping("/addresses/{userId}")
     public ResponseEntity<?> findAddresses(@PathVariable("userId") Integer userId) {
         return ResponseEntity.ok(addressService.findAddressByUserId(userId));
     }
 
-    @PostMapping("users/addresses")
+    @PostMapping("/addresses")
     public ResponseEntity<?> uploadAddresses(@RequestBody AddressDto addressDto) {
         return ResponseEntity.ok(addressService.saveAddressByUserId(addressDto));
     }
 
-    @PutMapping("users/addresses/{addressId}")
+    @PutMapping("/addresses/{addressId}")
     public ResponseEntity<?> deleteAddress(@PathVariable("addressId") Integer addressId) {
         return ResponseEntity.ok(addressService.deleteAddressById(addressId));
     }
 
-    @GetMapping("get-user/{userId}")
+    @GetMapping("/get-user/{userId}")
     public UserResponse getUser(@PathVariable("userId") Integer userId) {
         return userService.getUser(userId);
     }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 @CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/v1/identity-service/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
