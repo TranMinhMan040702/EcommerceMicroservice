@@ -9,19 +9,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/order-service/order")
 @CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
 @RequiredArgsConstructor
 public class OrderController {
 
     private final IOrderService orderService;
 
-    @PostMapping("/order")
+    @PostMapping("/")
     public void createOrder(@RequestBody OrderDto dto) {
         orderService.createOrder(dto);
     }
 
-    @GetMapping("/admin/order")
+    @GetMapping("/admin/orders")
     public ResponseEntity<?> getAllOrderByStatus(
             @RequestParam(required = false) String status,
             @RequestParam(defaultValue = "0", required = false) Integer page,
@@ -32,7 +32,7 @@ public class OrderController {
                 status, page, limit, sortBy, search));
     }
 
-    @GetMapping("/admin/order/top-5-latest")
+    @GetMapping("/admin/orders/top-5-latest")
     public ResponseEntity<?> getTop5OrderLatest(
             @RequestParam(defaultValue = "0", required = false) Integer page,
             @RequestParam(defaultValue = ApplicationConstants.DEFAULT_LIMIT_SIZE_PAGE, required = false) Integer limit,
@@ -42,34 +42,34 @@ public class OrderController {
 
     }
 
-    @GetMapping("/order/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(orderService.findOrderById(id));
     }
 
-    @GetMapping("/order/user")
+    @GetMapping("/user")
     public ResponseEntity<?> getOrderByStatus(
             @RequestParam("userId") Integer userId, @RequestParam("status") String status) {
         return ResponseEntity.ok(orderService.findOrderByStatus(userId, status));
     }
 
-    @GetMapping("/order/user/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<?> getOrderByUser(@PathVariable("userId") Integer userId) {
         return ResponseEntity.ok(orderService.findAllOrdersByUser(userId));
     }
 
-    @PutMapping("/order")
+    @PutMapping("/")
     public ResponseEntity<?> updateStatus(
             @RequestParam("orderId") Integer orderId, @RequestParam("status") String status) {
         return ResponseEntity.ok(orderService.updateStatus(orderId, status));
     }
 
-    @DeleteMapping("/order/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteOrder(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(orderService.deleteOrder(id));
     }
 
-    @GetMapping("/order/get-status/{orderId}")
+    @GetMapping("/get-status/{orderId}")
     public String getStatusOrder(@PathVariable("orderId") Integer orderId) {
         return orderService.getStatusOrder(orderId);
     }

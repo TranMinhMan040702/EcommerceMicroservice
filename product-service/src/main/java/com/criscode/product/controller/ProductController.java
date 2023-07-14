@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/product-service/product")
 @CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
 @RequiredArgsConstructor
 public class ProductController {
@@ -28,7 +28,7 @@ public class ProductController {
     private final IProductService productService;
     private final ProductRepository productRepository;
 
-    @GetMapping("/product")
+    @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public ProductDto getProductById(@RequestParam("id") Integer id){
         return productService.findById(id);
@@ -85,27 +85,27 @@ public class ProductController {
         return ResponseEntity.ok(productService.delete(id));
     }
 
-    @PostMapping("/product/update-quantity-sold")
+    @PostMapping("/update-quantity-sold")
     public void updateQuantityAndSoldProduct(@RequestBody List<OrderItemDto> orderItemDtos) {
         productService.updateQuantityAndSoldProduct(orderItemDtos);
     }
 
-    @GetMapping("/product/check-quantity/{productId}")
+    @GetMapping("/check-quantity/{productId}")
     public Integer checkQuantityOfProduct(@PathVariable("productId") Integer productId) {
         return productService.quantityOfProduct(productId);
     }
 
-    @GetMapping("/product/check-exist/{productId}")
+    @GetMapping("/check-exist/{productId}")
     public ProductExistResponse existed(@PathVariable("productId") Integer productId) {
         return productService.existed(productId);
     }
 
-    @GetMapping("/product/get-product-like/{ids}")
+    @GetMapping("/get-product-like/{ids}")
     public List<ProductDto> getAllProductLiked(@PathVariable("ids") String[] ids) {
         return productService.getAllProductLiked(ids);
     }
 
-    @PostMapping("/product/update-rating")
+    @PostMapping("/update-rating")
     public void updateRating(
             @RequestParam("productId") Integer productId, @RequestParam("rating") Integer rating) {
         productService.updateRatingProduct(productId, rating);

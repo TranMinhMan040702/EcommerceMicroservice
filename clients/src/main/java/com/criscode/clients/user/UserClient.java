@@ -11,12 +11,12 @@ import java.util.List;
 
 @FeignClient(name = "identity")
 public interface UserClient {
-    @GetMapping("/api/v1/user-check/{userid}")
+    @GetMapping("/api/v1/identity-service/user/user-check/{userid}")
     UserExistResponse existed(@PathVariable("userid") Integer userid);
 
-    @GetMapping("/api/v1/admin/get-all-user")
+    @GetMapping("/api/v1/identity-service/user/admin/get-all-user")
     List<UserDto> findAll();
-    @GetMapping("/api/v1/get-user/{userId}")
+    @GetMapping("/api/v1/identity-service/user/get-user/{userId}")
     UserResponse getUser(@PathVariable("userId") Integer userId);
 
 }

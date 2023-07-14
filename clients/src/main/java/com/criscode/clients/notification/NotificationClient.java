@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "notification")
 public interface NotificationClient {
-    @PostMapping("/notification/send-notification")
+    @PostMapping("/api/v1/notification/send-notification")
     void sendNotification(@RequestBody NotificationDto notificationDto);
 }

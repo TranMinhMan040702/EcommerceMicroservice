@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/product-service")
 @CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
 @AllArgsConstructor
 public class CategoryController {
