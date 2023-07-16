@@ -13,36 +13,50 @@ spring:
           uri: lb://IDENTITY
           predicates:
             - Path=/api/v1/identity-service/**
+          filters:
+            - AuthenticationFilter
 
         - id: cart
           uri: lb://CART
           predicates:
             - Path=/api/v1/cart-service/**
+          filters:
+            - AuthenticationFilter
 
         - id: product
           uri: lb://PRODUCT
           predicates:
             - Path=/api/v1/product-service/**
+          filters:
+            - AuthenticationFilter
 
         - id: like-product
           uri: lb://LIKE_PRODUCT
           predicates:
             - Path=/api/v1/like-product-service/users/**
+          filters:
+            - AuthenticationFilter
 
         - id: order
           uri: lb://ORDER
           predicates:
             - Path=/api/v1/order-service/**
+          filters:
+            - AuthenticationFilter
 
         - id: review
           uri: lb://REVIEW
           predicates:
             - Path=/api/v1/review-service/**
+          filters:
+            - AuthenticationFilter
 
         - id: notification
           uri: lb://NOTIFICATION
           predicates:
             - Path=/api/v1/notification-service/**
+          filters:
+            - AuthenticationFilter
 
 
 eureka:

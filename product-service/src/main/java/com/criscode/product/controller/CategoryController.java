@@ -6,6 +6,7 @@ import com.criscode.product.service.impl.CategoryService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,19 +24,28 @@ public class CategoryController {
     @PostMapping("/admin/categorise")
     public ResponseEntity<?> save(
             @RequestParam("model") String JsonObject,
-            @RequestParam(name = "file", required = false) MultipartFile file)
+            @RequestParam(name = "file", required = false) MultipartFile file,
+            @RequestHeader("X-Roles") String roles)
             throws JsonProcessingException {
+        if (roles == null || !roles.contains("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
+        }
         CategoryDto categoryDto =  objectMapper.readValue(JsonObject, CategoryDto.class);
         return ResponseEntity.ok(categoryService.save(categoryDto, file));
     }
 
-    @GetMapping("/categorise")
+    @GetMapping("/categorise/get-all")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(categoryService.findAll());
     }
 
     @DeleteMapping("/admin/categorise/{id}")
-    public ResponseEntity<?> deleteOne(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteOne(
+            @PathVariable Integer id,
+            @RequestHeader("X-Roles") String roles) {
+        if (roles == null || !roles.contains("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
+        }
         return ResponseEntity.ok(categoryService.deleteOne(id));
     }
 

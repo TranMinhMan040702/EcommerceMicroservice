@@ -5,6 +5,7 @@ import com.criscode.order.dto.OrderDto;
 import com.criscode.order.service.IOrderService;
 import com.criscode.order.service.impl.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,11 @@ public class OrderController {
             @RequestParam(defaultValue = "0", required = false) Integer page,
             @RequestParam(defaultValue = ApplicationConstants.DEFAULT_LIMIT_SIZE_PAGE, required = false) Integer limit,
             @RequestParam(defaultValue = ApplicationConstants.DEFAULT_LIMIT_SORT_BY, required = false) String sortBy,
-            @RequestParam(required = false) String search) {
+            @RequestParam(required = false) String search,
+            @RequestHeader("X-Roles") String roles) {
+        if (roles == null || !roles.contains("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
+        }
         return ResponseEntity.ok(orderService.findAllOrdersByStatusWithPaginationAndSort(
                 status, page, limit, sortBy, search));
     }
@@ -36,7 +41,11 @@ public class OrderController {
     public ResponseEntity<?> getTop5OrderLatest(
             @RequestParam(defaultValue = "0", required = false) Integer page,
             @RequestParam(defaultValue = ApplicationConstants.DEFAULT_LIMIT_SIZE_PAGE, required = false) Integer limit,
-            @RequestParam(defaultValue = ApplicationConstants.DEFAULT_LIMIT_SORT_BY, required = false) String sortBy) {
+            @RequestParam(defaultValue = ApplicationConstants.DEFAULT_LIMIT_SORT_BY, required = false) String sortBy,
+            @RequestHeader("X-Roles") String roles) {
+        if (roles == null || !roles.contains("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
+        }
         return ResponseEntity.ok(orderService.findAllOrdersByStatusWithPaginationAndSort(
                 null, page, limit = 5, sortBy, null));
 
