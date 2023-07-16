@@ -25,7 +25,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
-        return http.csrf().disable().authorizeRequests().anyRequest().permitAll().and()
+        return http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/v1/auth/**").permitAll()
+                .and()
                 .build();
     }
 
@@ -35,7 +38,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(AuthenticationConfiguration configuration) {
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         authenticationProvider.setUserDetailsService(userDetailsService());

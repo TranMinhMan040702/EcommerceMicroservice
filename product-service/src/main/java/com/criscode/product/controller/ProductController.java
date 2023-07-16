@@ -34,7 +34,7 @@ public class ProductController {
         return productService.findById(id);
     }
 
-    @GetMapping("/products")
+    @GetMapping("/products/get-all")
     public ResponseEntity<?> findAll(
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false, defaultValue = "0") Integer page,
@@ -62,8 +62,12 @@ public class ProductController {
     @PostMapping("/admin/products")
     public ResponseEntity<?> createProduct(
             @RequestParam("model") String JsonObject,
-            @RequestParam("files") MultipartFile[] files) throws Exception {
+            @RequestParam("files") MultipartFile[] files,
+            @RequestHeader("X-Roles") String roles) throws Exception {
 
+        if (roles == null || !roles.contains("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
+        }
         ProductDto product = objectMapper.readValue(JsonObject, ProductDto.class);
         return ResponseEntity.ok(productService.save(product, files));
     }
@@ -71,8 +75,13 @@ public class ProductController {
     @PostMapping("/admin/products/{id}")
     public ResponseEntity<?> updateProduct(
             @PathVariable Integer id,
-            @RequestParam("model") String JsonObject, @RequestParam("files") MultipartFile[] files)
+            @RequestParam("model") String JsonObject, @RequestParam("files") MultipartFile[] files,
+            @RequestHeader("X-Roles") String roles)
             throws JsonProcessingException {
+
+        if (roles == null || !roles.contains("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
+        }
         productRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("Product not existed with id:" + id)
         );
@@ -81,7 +90,13 @@ public class ProductController {
     }
 
     @DeleteMapping("/admin/products/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteProduct(
+            @PathVariable Integer id,
+            @RequestHeader("X-Roles") String roles) {
+
+        if (roles == null || !roles.contains("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
+        }
         return ResponseEntity.ok(productService.delete(id));
     }
 

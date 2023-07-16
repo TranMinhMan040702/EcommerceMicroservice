@@ -13,11 +13,12 @@ import java.util.Map;
 @Service
 public class JwtService {
 
-    private static final String SECRET = "secret";
+    private final String SECRET_KEY = "secret";
+    private final Long EXPIRATION_TIME = Long.valueOf(10 * 60 * 1000); // 10 minute
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", userDetails.getAuthorities().toString());
+        claims.put("roles", userDetails.getAuthorities());
         return createToken(claims, userDetails.getUsername());
     }
 
@@ -26,8 +27,8 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
-                .signWith(SignatureAlgorithm.HS256, SECRET).compact();
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
 }

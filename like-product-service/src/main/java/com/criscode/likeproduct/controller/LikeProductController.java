@@ -3,6 +3,7 @@ package com.criscode.likeproduct.controller;
 import com.criscode.likeproduct.service.ILikeProductService;
 import com.criscode.likeproduct.service.impl.LikeProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,10 @@ public class LikeProductController {
     private final ILikeProductService likeProductService;
 
     @GetMapping("users/admin/follow-product")
-    public ResponseEntity<?> getAllLikeProduct() {
+    public ResponseEntity<?> getAllLikeProduct(@RequestHeader("X-Roles") String roles) {
+        if (roles == null || !roles.contains("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
+        }
         return ResponseEntity.ok(likeProductService.findAllLikeProduct());
     }
 

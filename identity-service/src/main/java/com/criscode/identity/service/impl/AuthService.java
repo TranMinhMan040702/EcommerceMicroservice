@@ -13,6 +13,7 @@ import com.criscode.identity.dto.AuthRequest;
 import com.criscode.identity.dto.AuthResponse;
 import com.criscode.identity.dto.EmailCheckExistResponse;
 import com.criscode.identity.dto.RegisterRequest;
+import com.criscode.identity.entity.Role;
 import com.criscode.identity.entity.User;
 import com.criscode.identity.repository.UserRepository;
 import com.criscode.identity.service.IAuthService;
@@ -99,7 +100,7 @@ public class AuthService implements IAuthService {
         if (authentication.isAuthenticated()) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());
             User user = userRepository.findByEmail(authRequest.getEmail()).get();
-            Set<String> roles = user.getRoles().stream().map(role -> role.getRole()).collect(Collectors.toSet());
+            Set<String> roles = user.getRoles().stream().map(Role::getRole).collect(Collectors.toSet());
             return AuthResponse.builder()
                     .status(HttpStatus.OK.value())
                     .accessToken(jwtService.generateToken(userDetails))

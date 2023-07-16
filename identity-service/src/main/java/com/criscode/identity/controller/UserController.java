@@ -9,6 +9,7 @@ import com.criscode.identity.service.IAddressService;
 import com.criscode.identity.service.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,12 +36,19 @@ public class UserController {
             @RequestParam(defaultValue = "0", required = false) Integer page,
             @RequestParam(defaultValue = ApplicationConstants.DEFAULT_LIMIT_SIZE_PAGE, required = false) Integer limit,
             @RequestParam(defaultValue = ApplicationConstants.DEFAULT_LIMIT_SORT_BY, required = false) String sortBy,
-            @RequestParam(required = false) String search) {
+            @RequestParam(required = false) String search,
+            @RequestHeader("X-Roles") String roles) {
+        if (roles == null || !roles.contains("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
+        }
         return ResponseEntity.ok(userService.findAll(page, limit, sortBy, search));
     }
 
     @GetMapping("admin/get-all-user")
-    public List<UserDto> findAll() {
+    public List<UserDto> findAll(@RequestHeader("X-Roles") String roles) {
+        if (roles == null || !roles.contains("ADMIN")) {
+            return null;
+        }
         return userService.findAll();
     }
 
