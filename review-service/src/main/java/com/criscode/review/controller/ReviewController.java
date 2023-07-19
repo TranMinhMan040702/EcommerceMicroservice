@@ -15,7 +15,7 @@ public class ReviewController {
 
     private final IReviewService reviewService;
 
-    @GetMapping("/product/{productId}")
+    @GetMapping("/public/product/{productId}")
     public ResponseEntity<?> getAllReviewByProduct(@PathVariable("productId") Integer productId) {
         return ResponseEntity.ok(reviewService.getAllReviewByProduct(productId));
     }

@@ -34,18 +34,14 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.save(categoryDto, file));
     }
 
-    @GetMapping("/categorise/get-all")
+    @GetMapping("/public/categorise")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(categoryService.findAll());
     }
 
     @DeleteMapping("/admin/categorise/{id}")
     public ResponseEntity<?> deleteOne(
-            @PathVariable Integer id,
-            @RequestHeader("X-Roles") String roles) {
-        if (roles == null || !roles.contains("ADMIN")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
-        }
+            @PathVariable Integer id) {
         return ResponseEntity.ok(categoryService.deleteOne(id));
     }
 

@@ -36,19 +36,12 @@ public class UserController {
             @RequestParam(defaultValue = "0", required = false) Integer page,
             @RequestParam(defaultValue = ApplicationConstants.DEFAULT_LIMIT_SIZE_PAGE, required = false) Integer limit,
             @RequestParam(defaultValue = ApplicationConstants.DEFAULT_LIMIT_SORT_BY, required = false) String sortBy,
-            @RequestParam(required = false) String search,
-            @RequestHeader("X-Roles") String roles) {
-        if (roles == null || !roles.contains("ADMIN")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
-        }
+            @RequestParam(required = false) String search) {
         return ResponseEntity.ok(userService.findAll(page, limit, sortBy, search));
     }
 
     @GetMapping("admin/get-all-user")
-    public List<UserDto> findAll(@RequestHeader("X-Roles") String roles) {
-        if (roles == null || !roles.contains("ADMIN")) {
-            return null;
-        }
+    public List<UserDto> findAll() {
         return userService.findAll();
     }
 
