@@ -1,5 +1,6 @@
 package com.criscode.identity.controller;
 
+import com.criscode.clients.user.dto.ValidateTokenResponse;
 import com.criscode.identity.dto.AuthRequest;
 import com.criscode.identity.dto.RegisterRequest;
 import com.criscode.identity.service.IAuthService;
@@ -32,6 +33,11 @@ public class AuthController {
     @PostMapping("/authenticate")
     public ResponseEntity<?> authenticate(@RequestBody AuthRequest request) {
         return ResponseEntity.ok(authService.authenticate(request));
+    }
+
+    @GetMapping("/validate-token")
+    public ValidateTokenResponse validateAccessToken(@RequestParam("token") String token) {
+        return authService.validateToken(token);
     }
 
 }

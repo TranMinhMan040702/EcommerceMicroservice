@@ -16,10 +16,7 @@ public class LikeProductController {
     private final ILikeProductService likeProductService;
 
     @GetMapping("users/admin/follow-product")
-    public ResponseEntity<?> getAllLikeProduct(@RequestHeader("X-Roles") String roles) {
-        if (roles == null || !roles.contains("ADMIN")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
-        }
+    public ResponseEntity<?> getAllLikeProduct() {
         return ResponseEntity.ok(likeProductService.findAllLikeProduct());
     }
 

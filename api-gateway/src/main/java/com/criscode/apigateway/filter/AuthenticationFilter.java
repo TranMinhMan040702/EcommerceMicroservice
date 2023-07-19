@@ -1,6 +1,7 @@
 package com.criscode.apigateway.filter;
 
-import com.criscode.apigateway.util.JwtUtil;
+import com.criscode.clients.user.UserClient;
+import com.criscode.clients.user.dto.ValidateTokenResponse;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -20,13 +21,13 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 
     private final RouteValidator routeValidator;
 
-    private final JwtUtil jwtUtil;
+    private final UserClient userClient;
 
 
-    public AuthenticationFilter(RouteValidator routeValidator, JwtUtil jwtUtil) {
+    public AuthenticationFilter(RouteValidator routeValidator, UserClient userClient) {
         super(Config.class);
         this.routeValidator = routeValidator;
-        this.jwtUtil = jwtUtil;
+        this.userClient = userClient;
     }
 
     @Override
@@ -37,20 +38,24 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 ServerHttpRequest request = exchange.getRequest();
                 String jwtToken = extractJwtToken(request);
 
-                if (jwtToken != null  && jwtUtil.validateToken(jwtToken)) {
-                    String username = jwtUtil.extractUsername(jwtToken);
-                    List<String> roles = jwtUtil.extractRoles(jwtToken);
+                if (jwtToken != null) {
+                    ValidateTokenResponse validateTokenResponse = userClient.validateAccessToken(jwtToken);
+                    if (validateTokenResponse.getUsername() != null) {
+                        String username = validateTokenResponse.getUsername();
+                        List<String> roles = validateTokenResponse.getAuthorities();
 
-                    if (checkRequireAdminRole(request) && !roles.contains("ADMIN")) {
-                        return onError(exchange, "Access denied. Admin role required.");
+                        // todo: Call auth-service to check token and get user in db
+                        if (checkRequireAdminRole(request) && !roles.contains("ADMIN")) {
+                            return onError(exchange, "Access denied. Admin role required.");
+                        }
+
+                        ServerHttpRequest modifiedRequest = exchange.getRequest().mutate()
+                                .header("X-Roles", String.join(",", roles))
+                                .header("X-User", username)
+                                .build();
+
+                        return chain.filter(exchange.mutate().request(modifiedRequest).build());
                     }
-
-                    ServerHttpRequest modifiedRequest = exchange.getRequest().mutate()
-                            .header("X-Roles", String.join(",", roles))
-                            .header("X-User", username)
-                            .build();
-
-                    return chain.filter(exchange.mutate().request(modifiedRequest).build());
                 }
                 return onError(exchange, "Invalid JWT Token");
             }

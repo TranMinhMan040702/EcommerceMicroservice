@@ -1,9 +1,7 @@
 package com.criscode.identity.service;
 
-import com.criscode.identity.dto.AuthRequest;
-import com.criscode.identity.dto.AuthResponse;
-import com.criscode.identity.dto.EmailCheckExistResponse;
-import com.criscode.identity.dto.RegisterRequest;
+import com.criscode.clients.user.dto.ValidateTokenResponse;
+import com.criscode.identity.dto.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,4 +13,6 @@ public interface IAuthService {
     EmailCheckExistResponse emailCheckExistResponse(String email);
 
     AuthResponse authenticate(AuthRequest authRequest);
+
+    ValidateTokenResponse validateToken(String token);
 }

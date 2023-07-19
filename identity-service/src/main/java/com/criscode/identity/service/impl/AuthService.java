@@ -6,13 +6,11 @@ import com.criscode.clients.cart.dto.CartDto;
 import com.criscode.clients.mail.OtpClient;
 import com.criscode.clients.mail.dto.CheckOtpResponse;
 import com.criscode.clients.mail.dto.EmailDetails;
+import com.criscode.clients.user.dto.ValidateTokenResponse;
 import com.criscode.exceptionutils.AlreadyExistsException;
 import com.criscode.identity.config.CustomUserDetailsService;
 import com.criscode.identity.converter.UserConverter;
-import com.criscode.identity.dto.AuthRequest;
-import com.criscode.identity.dto.AuthResponse;
-import com.criscode.identity.dto.EmailCheckExistResponse;
-import com.criscode.identity.dto.RegisterRequest;
+import com.criscode.identity.dto.*;
 import com.criscode.identity.entity.Role;
 import com.criscode.identity.entity.User;
 import com.criscode.identity.repository.UserRepository;
@@ -22,13 +20,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -112,5 +108,16 @@ public class AuthService implements IAuthService {
                     .status(HttpStatus.BAD_REQUEST.value())
                     .build();
         }
+    }
+
+    @Override
+    public ValidateTokenResponse validateToken(String token) {
+        String username = jwtService.extractUsername(token);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        return ValidateTokenResponse.builder()
+                .username(userDetails.getUsername())
+                .authorities(userDetails.getAuthorities()
+                        .stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .build();
     }
 }
