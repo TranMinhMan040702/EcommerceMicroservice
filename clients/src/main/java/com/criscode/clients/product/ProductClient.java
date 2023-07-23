@@ -11,7 +11,7 @@ import java.util.List;
 @FeignClient(name = "product")
 public interface ProductClient {
 
-    @GetMapping("/api/v1/product-service/product")
+    @GetMapping("/api/v1/product-service/product/public")
     ProductDto getProductById(@RequestParam("id") Integer id);
     @PostMapping("/api/v1/product-service/product/update-quantity-sold")
     void updateQuantityAndSoldProduct(@RequestBody List<OrderItemDto> orderItemDtos);

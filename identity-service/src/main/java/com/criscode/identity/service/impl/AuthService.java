@@ -6,7 +6,7 @@ import com.criscode.clients.cart.dto.CartDto;
 import com.criscode.clients.mail.OtpClient;
 import com.criscode.clients.mail.dto.CheckOtpResponse;
 import com.criscode.clients.mail.dto.EmailDetails;
-import com.criscode.clients.user.dto.ValidateTokenResponse;
+import com.criscode.identity.dto.ValidateTokenResponse;
 import com.criscode.exceptionutils.AlreadyExistsException;
 import com.criscode.identity.config.CustomUserDetailsService;
 import com.criscode.identity.converter.UserConverter;
@@ -112,12 +112,17 @@ public class AuthService implements IAuthService {
 
     @Override
     public ValidateTokenResponse validateToken(String token) {
-        String username = jwtService.extractUsername(token);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        return ValidateTokenResponse.builder()
-                .username(userDetails.getUsername())
-                .authorities(userDetails.getAuthorities()
-                        .stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-                .build();
+
+        if (!jwtService.isTokenExpired(token)) {
+            String username = jwtService.extractUsername(token);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            return ValidateTokenResponse.builder()
+                    .username(userDetails.getUsername())
+                    .authorities(userDetails.getAuthorities()
+                            .stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                    .build();
+        }
+        // todo: exception JWT Expired
+        return null;
     }
 }

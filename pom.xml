@@ -22,7 +22,7 @@
         <module>notification-service</module>
         <module>websocket-service</module>
         <module>api-gateway</module>
-        <module>filter-utils</module>
+
     </modules>
 	<name>ecommerce-microservice</name>
 	<description>Project Ecommerce Microservices</description>

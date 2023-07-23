@@ -1,16 +1,18 @@
 package com.criscode.identity.controller;
 
-import com.criscode.clients.user.dto.ValidateTokenResponse;
+import com.criscode.identity.dto.SingleResponse;
+import com.criscode.identity.dto.ValidateTokenResponse;
 import com.criscode.identity.dto.AuthRequest;
 import com.criscode.identity.dto.RegisterRequest;
 import com.criscode.identity.service.IAuthService;
-import com.criscode.identity.service.impl.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
+
+@CrossOrigin({"https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000"})
 @RestController
 @RequestMapping("/api/v1/identity-service/auth")
 @RequiredArgsConstructor
@@ -35,9 +37,9 @@ public class AuthController {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
-    @GetMapping("/validate-token")
-    public ValidateTokenResponse validateAccessToken(@RequestParam("token") String token) {
-        return authService.validateToken(token);
+    @PatchMapping("/validate-token/{token}")
+    public ResponseEntity<SingleResponse<ValidateTokenResponse>> validateAccessToken(@PathVariable("token") String token) {
+        return ResponseEntity.ok(SingleResponse.of(authService.validateToken(token)));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.criscode.product.security;
+package com.criscode.order.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final SecurityFilter securityFilter;
-
 
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
