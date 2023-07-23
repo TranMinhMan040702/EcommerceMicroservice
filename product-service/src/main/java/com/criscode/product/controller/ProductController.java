@@ -28,7 +28,7 @@ public class ProductController {
     private final IProductService productService;
     private final ProductRepository productRepository;
 
-    @GetMapping("/")
+    @GetMapping("/public")
     @ResponseStatus(HttpStatus.OK)
     public ProductDto getProductById(@RequestParam("id") Integer id){
         return productService.findById(id);

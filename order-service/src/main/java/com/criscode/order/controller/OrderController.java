@@ -17,7 +17,7 @@ public class OrderController {
 
     private final IOrderService orderService;
 
-    @PostMapping("/")
+    @PostMapping
     public void createOrder(@RequestBody OrderDto dto) {
         orderService.createOrder(dto);
     }

@@ -41,4 +41,6 @@ public class DeliveryController {
         return ResponseEntity.ok(deliveryService.save(deliveryDto));
     }
 
+    // todo: delete delivery
+
 }

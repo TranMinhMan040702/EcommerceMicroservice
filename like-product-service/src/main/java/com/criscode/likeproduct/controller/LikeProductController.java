@@ -31,7 +31,7 @@ public class LikeProductController {
         return ResponseEntity.ok(likeProductService.likeProduct(userId, productId));
     }
 
-    @PutMapping("users/follow-product")
+    @PutMapping("users/unfollow-product")
     public ResponseEntity<?> unLikeProduct(
             @RequestParam("userId") Integer userId, @RequestParam("productId") Integer productId) {
         return ResponseEntity.ok(likeProductService.unLikeProduct(userId, productId));

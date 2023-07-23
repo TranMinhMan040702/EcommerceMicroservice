@@ -24,12 +24,9 @@ public class CategoryController {
     @PostMapping("/admin/categorise")
     public ResponseEntity<?> save(
             @RequestParam("model") String JsonObject,
-            @RequestParam(name = "file", required = false) MultipartFile file,
-            @RequestHeader("X-Roles") String roles)
+            @RequestParam(name = "file", required = false) MultipartFile file)
             throws JsonProcessingException {
-        if (roles == null || !roles.contains("ADMIN")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
-        }
+
         CategoryDto categoryDto =  objectMapper.readValue(JsonObject, CategoryDto.class);
         return ResponseEntity.ok(categoryService.save(categoryDto, file));
     }

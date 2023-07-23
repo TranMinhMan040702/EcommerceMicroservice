@@ -1,4 +1,4 @@
-package com.criscode.product.security;
+package com.criscode.likeproduct.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

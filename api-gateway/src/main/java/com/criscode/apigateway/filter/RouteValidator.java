@@ -10,9 +10,7 @@ import java.util.function.Predicate;
 public class RouteValidator {
 
     public static final List<String> openApiEndpoints = List.of(
-            "/auth/register",
-            "/auth/register-confirm",
-            "/auth/authenticate",
+            "/auth",
             "/eureka",
             "/public"
     );
@@ -21,9 +19,5 @@ public class RouteValidator {
             request -> openApiEndpoints
                     .stream()
                     .noneMatch(uri -> request.getURI().getPath().contains(uri));
-
-    // Check url require role admin
-    public Predicate<ServerHttpRequest> isRequireAdminRole =
-            request -> request.getURI().getPath().contains("admin");
 
 }

@@ -1,6 +1,5 @@
 package com.criscode.identity.security;
 
-import com.criscode.filter.SecurityFilter;
 import com.criscode.identity.config.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

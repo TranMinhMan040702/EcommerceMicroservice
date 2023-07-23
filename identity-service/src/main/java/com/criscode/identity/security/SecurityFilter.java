@@ -1,4 +1,4 @@
-package com.criscode.filter;
+package com.criscode.identity.security;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
