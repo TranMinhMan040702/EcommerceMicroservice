@@ -28,7 +28,7 @@ spring:
 
 
         - id: like-product
-          uri: lb://LIKE_PRODUCT
+          uri: lb://LIKE-PRODUCT
           predicates:
             - Path=/api/v1/like-product-service/users/**
 
