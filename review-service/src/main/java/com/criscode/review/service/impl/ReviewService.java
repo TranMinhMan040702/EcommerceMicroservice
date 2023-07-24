@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class ReviewService implements IReviewService {
         Review review = new Review();
         String status = orderClient.getStatusOrder(reviewDto.getOrderId());
 
-        if (status != STATUS_ORDER) {
+        if (!Objects.equals(status, STATUS_ORDER)) {
             reviewDto.setApproved(false);
             return reviewDto;
         } else {
@@ -62,7 +63,7 @@ public class ReviewService implements IReviewService {
      */
     private void updateRatingProduct(Integer productId) {
         List<Review> reviews = reviewRepository.findAllByProductId(productId);
-        Integer rating = 0;
+        int rating = 0;
         for (Review review : reviews) {
             rating = rating + review.getRating();
         }

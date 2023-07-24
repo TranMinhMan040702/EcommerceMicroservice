@@ -2,7 +2,7 @@ server:
   port: 8085
 spring:
   application:
-    name: like_product
+    name: like-product
   datasource:
     url: jdbc:mysql://localhost:3308/microservice
     username: admin

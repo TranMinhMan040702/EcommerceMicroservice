@@ -153,7 +153,7 @@ public class OrderService implements IOrderService {
         }
         order.setStatus(HandleStatusOrder.handleStatus(status));
         orderRepository.save(order);
-        return findAllOrdersByUser(order.getId());
+        return findAllOrdersByUser(order.getUserId());
     }
 
     private void sendNotification(Integer orderId, Integer userId) {

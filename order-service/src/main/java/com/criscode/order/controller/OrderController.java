@@ -67,7 +67,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.findAllOrdersByUser(userId));
     }
 
-    @PutMapping("/")
+    @PutMapping
     public ResponseEntity<?> updateStatus(
             @RequestParam("orderId") Integer orderId, @RequestParam("status") String status) {
         return ResponseEntity.ok(orderService.updateStatus(orderId, status));
