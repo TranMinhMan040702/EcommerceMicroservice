@@ -11,6 +11,7 @@ import com.criscode.review.service.IReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -88,5 +89,16 @@ public class ReviewService implements IReviewService {
     public List<ReviewDto> getAllReviewByProduct(Integer productId) {
         List<Review> reviews = reviewRepository.findAllByProductId(productId);
         return reviewConverter.mapToDto(reviews);
+    }
+
+    @Override
+    public List<Long> statisticRating() {
+        List<Long> listRating = new ArrayList<>();
+
+        for (int i = 1; i <= 5; i++) {
+            listRating.add(reviewRepository.countByRating(i));
+        }
+
+        return listRating;
     }
 }

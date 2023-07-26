@@ -23,4 +23,10 @@ public interface IOrderService {
     List<OrderDto> deleteOrder(Integer orderId);
 
     String getStatusOrder(Integer orderId);
+
+    long totalOrder();
+
+    Double totalSales();
+
+    List<Double> statisticRevenue(int year);
 }

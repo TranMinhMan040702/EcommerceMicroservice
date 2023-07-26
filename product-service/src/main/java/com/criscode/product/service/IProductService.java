@@ -37,4 +37,6 @@ public interface IProductService {
     List<ProductDto> getAllProductLiked(String[] ids);
 
     void updateRatingProduct(Integer productId, Integer rating);
+
+    long totalProduct();
 }

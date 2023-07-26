@@ -20,4 +20,10 @@ public class MailConsumer {
         mailService.sendActivationEmail(emailDetails);
     }
 
+    @RabbitListener(queues = "${rabbitmq.queue.mail}")
+    public void consumer(String email) {
+        log.info("Consumed {} from queue", email);
+        mailService.sendEmailResetPassword(email);
+    }
+
 }

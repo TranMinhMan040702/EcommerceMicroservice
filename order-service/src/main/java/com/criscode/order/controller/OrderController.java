@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/order-service/order")
 @CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
@@ -81,6 +83,21 @@ public class OrderController {
     @GetMapping("/get-status/{orderId}")
     public String getStatusOrder(@PathVariable("orderId") Integer orderId) {
         return orderService.getStatusOrder(orderId);
+    }
+
+    @GetMapping("/statistic/revenue")
+    public List<Double> getStatisticRevenue(@RequestParam("year") int year) {
+        return orderService.statisticRevenue(year);
+    }
+
+    @GetMapping("/statistic/get-total")
+    public long getTotal() {
+        return orderService.totalOrder();
+    }
+
+    @GetMapping("/statistic/get-totalsale")
+    public Double getTotalSale() {
+        return orderService.totalSales();
     }
 
 }

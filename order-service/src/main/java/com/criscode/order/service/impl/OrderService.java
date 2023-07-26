@@ -26,9 +26,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.time.YearMonth;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -184,6 +183,58 @@ public class OrderService implements IOrderService {
                 () -> new NotFoundException("Order does not exist with id: " + orderId)
         );
         return order.getStatus().toString();
+    }
+
+    @Override
+    public long totalOrder() {
+        return orderRepository.count();
+    }
+
+    @Override
+    public Double totalSales() {
+        return calulatorRevenue(orderRepository.findAll());
+    }
+
+    @Override
+    public List<Double> statisticRevenue(int year) {
+        List<Double> listRevenue = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            Specification<Order> specification = OrderSpecification
+                    .statisticSpecification(getStartDate(i, year), getEndDate(i, year));
+            List<Order> orders = orderRepository.findAll(specification);
+            listRevenue.add(calulatorRevenue(orders));
+        }
+
+        return listRevenue;
+    }
+
+    private Date getStartDate(int month, int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.YEAR, year);
+        return calendar.getTime();
+    }
+
+    private Date getEndDate(int month, int year) {
+        YearMonth yearMonthObject = YearMonth.of(year, month + 1);
+        int daysInMonth = yearMonthObject.lengthOfMonth();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, daysInMonth);
+        calendar.set(Calendar.YEAR, year);
+        return calendar.getTime();
+    }
+    private Double calulatorRevenue(List<Order> orders) {
+        Double result = 0.0;
+        for (Order order : orders) {
+            result += order.getAmountFromUser();
+        }
+        return result;
     }
 
 }

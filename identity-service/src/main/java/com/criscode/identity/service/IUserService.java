@@ -3,6 +3,8 @@ package com.criscode.identity.service;
 import com.criscode.clients.user.dto.UserDto;
 import com.criscode.clients.user.dto.UserExistResponse;
 import com.criscode.clients.user.dto.UserResponse;
+import com.criscode.identity.dto.ResetPasswordRequest;
+import com.criscode.identity.dto.ResetPasswordResponse;
 import com.criscode.identity.dto.UserPaging;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,4 +27,8 @@ public interface IUserService {
     UserDto updateUser(UserDto userDto, MultipartFile file) throws ParseException;
 
     String saveAvatarCloudinary(MultipartFile file);
+
+    ResetPasswordResponse resetPassword(ResetPasswordRequest resetPasswordRequest);
+
+    void forgotPassword(String email);
 }

@@ -11,4 +11,7 @@ public interface IMailService {
 
     @Async
     void sendActivationEmail(EmailDetails emailDetails);
+
+    @Async
+    void sendEmailResetPassword(String email);
 }

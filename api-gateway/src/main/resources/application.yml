@@ -50,6 +50,11 @@ spring:
           predicates:
             - Path=/api/v1/notification-service/**
 
+        - id: statistic
+          uri: lb://STATISTIC
+          predicates:
+            - Path=/api/v1/statistic-service/**
+
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors:
