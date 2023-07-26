@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import java.nio.charset.StandardCharsets;
+import java.util.Random;
 
 @Component
 @Slf4j
@@ -57,6 +58,35 @@ public class MailService implements IMailService {
             var content = "<b>Vui lòng nhập mã code để xác nhận</b><br/>" + "<h1>" + code + "</h1>";
             sendEmail(userEmail, subject, content, false, true);
         }
+    }
+
+    @Override
+    @Async
+    public void sendEmailResetPassword(String email) {
+        if (email != null) {
+            String code = randomAlphanumericString(10);
+            String url = "http://localhost:3000/forgot-password?code=" + code + "&email=" + email;
+
+            var subject = "Reset Password";
+            var content = "<b>Truy cập vào " + "<a href = \"" + url + "\">Ấn tại đây</a>"
+                    + " hoặc đường dẫn <br/>" + "[" + "<a href = \"" + url + "\">" + url + "</a>"
+                    + "]" + " để đặt lại mật khẩu.</b>";
+
+            sendEmail(email, subject, content, false, true);
+        }
+    }
+
+    private String randomAlphanumericString(int length) {
+        String alphanumericCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuv";
+        StringBuffer randomString = new StringBuffer(length);
+        Random random = new Random();
+
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(alphanumericCharacters.length());
+            char randomChar = alphanumericCharacters.charAt(randomIndex);
+            randomString.append(randomChar);
+        }
+        return randomString.toString();
     }
 
 }

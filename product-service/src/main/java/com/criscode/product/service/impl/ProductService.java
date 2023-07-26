@@ -242,4 +242,9 @@ public class ProductService implements IProductService {
         productRepository.save(product);
     }
 
+    @Override
+    public long totalProduct() {
+        return productRepository.count();
+    }
+
 }

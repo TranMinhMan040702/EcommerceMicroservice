@@ -112,4 +112,9 @@ public class ProductController {
         productService.updateRatingProduct(productId, rating);
     }
 
+    @GetMapping("/statistic/total-product")
+    public long getTotalProduct() {
+        return productService.totalProduct();
+    }
+
 }

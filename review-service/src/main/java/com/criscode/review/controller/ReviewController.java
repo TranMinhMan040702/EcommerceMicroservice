@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/review-service/review")
-@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
+@CrossOrigin({"https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/"})
 @RequiredArgsConstructor
 public class ReviewController {
 
@@ -33,5 +35,10 @@ public class ReviewController {
     @PostMapping("/edit")
     public ResponseEntity<?> editReview(@RequestBody ReviewDto reviewDto) {
         return ResponseEntity.ok(reviewService.saveReview(reviewDto));
+    }
+
+    @GetMapping("/statistic/rating")
+    public List<Long> statisticRating() {
+        return reviewService.statisticRating();
     }
 }

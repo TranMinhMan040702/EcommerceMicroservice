@@ -5,6 +5,7 @@ import com.criscode.clients.user.dto.UserExistResponse;
 import com.criscode.clients.user.dto.AddressDto;
 import com.criscode.clients.user.dto.UserResponse;
 import com.criscode.identity.constants.ApplicationConstants;
+import com.criscode.identity.dto.ResetPasswordRequest;
 import com.criscode.identity.service.IAddressService;
 import com.criscode.identity.service.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -78,6 +79,16 @@ public class UserController {
     @GetMapping("/get-user/{userId}")
     public UserResponse getUser(@PathVariable("userId") Integer userId) {
         return userService.getUser(userId);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
+        return ResponseEntity.ok(userService.resetPassword(request));
+    }
+
+    @PostMapping("/send-mail/forgot-password")
+    public void forgotPassword(@RequestParam("email") String email) {
+        userService.forgotPassword(email);
     }
 
 }

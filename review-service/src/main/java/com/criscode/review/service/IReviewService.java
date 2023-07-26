@@ -12,4 +12,6 @@ public interface IReviewService {
     List<ReviewDto> getAllReviewByUser(Integer userId);
 
     List<ReviewDto> getAllReviewByProduct(Integer productId);
+
+    List<Long> statisticRating();
 }

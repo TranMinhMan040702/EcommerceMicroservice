@@ -23,4 +23,6 @@ public interface ProductClient {
     List<ProductDto> getAllProductLiked(@PathVariable("ids") String[] ids);
     @PostMapping("/api/v1/product-service/product/update-rating")
     void updateRating(@RequestParam("productId") Integer productId, @RequestParam("rating") Integer rating);
+    @GetMapping("/api/v1/product-service/product/statistic/total-product")
+    long getTotalProduct();
 }
