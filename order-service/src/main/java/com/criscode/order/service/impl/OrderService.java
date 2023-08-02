@@ -45,15 +45,7 @@ public class OrderService implements IOrderService {
     private final UserClient userClient;
     private final NotificationClient notificationClient;
     private final NotificationSocketClient notificationSocketClient;
-
-    /**
-     * @param status
-     * @param page
-     * @param limit
-     * @param sortBy
-     * @param search
-     * @return
-     */
+    
     @Override
     public List<OrderDto> findAllOrdersByStatusWithPaginationAndSort(
             String status, Integer page, Integer limit, String sortBy, String search) {
@@ -72,10 +64,6 @@ public class OrderService implements IOrderService {
         return orderDtos;
     }
 
-    /**
-     * @param userId
-     * @return
-     */
     @Override
     public List<OrderDto> findAllOrdersByUser(Integer userId) {
         // todo: check order with order of user current
@@ -88,10 +76,6 @@ public class OrderService implements IOrderService {
         return orders.stream().map(orderConverter::mapToDto).collect(Collectors.toList());
     }
 
-    /**
-     * @param orderId
-     * @return
-     */
     @Override
     public OrderDto findOrderById(Integer orderId) {
         // todo: check order with order of user current
@@ -101,11 +85,6 @@ public class OrderService implements IOrderService {
         return orderConverter.mapToDto(order);
     }
 
-    /**
-     * @param userId
-     * @param status
-     * @return
-     */
     @Override
     public List<OrderDto> findOrderByStatus(Integer userId, String status) {
         // todo: check order with order of user current
@@ -115,10 +94,6 @@ public class OrderService implements IOrderService {
         return orders.stream().map(orderConverter::mapToDto).collect(Collectors.toList());
     }
 
-    /**
-     * @param orderDto
-     * @return
-     */
     @Override
     public void createOrder(OrderDto orderDto) {
         // todo: check order with order of user current
@@ -138,12 +113,6 @@ public class OrderService implements IOrderService {
         cartClient.clearedCart(cartClient.findCartByUser(orderDto.getUserId()).getId());
     }
 
-
-    /**
-     * @param orderId
-     * @param status
-     * @return
-     */
     @Override
     public List<OrderDto> updateStatus(Integer orderId, String status) {
         // todo: check order with order of user current
@@ -163,13 +132,9 @@ public class OrderService implements IOrderService {
         // todo: push rabbitmq
         notificationClient.sendNotification(notificationDto);
         // todo: send to user
-        notificationSocketClient.processMessage(notificationDto);
+        notificationSocketClient.processMessage(notificationDto, userId);
     }
 
-    /**
-     * @param orderId
-     * @return
-     */
     @Override
     public List<OrderDto> deleteOrder(Integer orderId) {
         // todo: check order with order of user current
