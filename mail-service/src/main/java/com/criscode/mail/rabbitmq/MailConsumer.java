@@ -14,13 +14,13 @@ public class MailConsumer {
 
     private final MailService mailService;
 
-    @RabbitListener(queues = "${rabbitmq.queue.mail}")
+    @RabbitListener(queues = "${rabbitmq.queue.register-account}")
     public void consumer(EmailDetails emailDetails) {
         log.info("Consumed {} from queue", emailDetails);
         mailService.sendActivationEmail(emailDetails);
     }
 
-    @RabbitListener(queues = "${rabbitmq.queue.mail}")
+    @RabbitListener(queues = "${rabbitmq.queue.forgot-pass}")
     public void consumer(String email) {
         log.info("Consumed {} from queue", email);
         mailService.sendEmailResetPassword(email);

@@ -3,7 +3,6 @@ package com.criscode.order.controller;
 import com.criscode.order.constants.ApplicationConstants;
 import com.criscode.order.dto.OrderDto;
 import com.criscode.order.service.IOrderService;
-import com.criscode.order.service.impl.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/order-service/order")
-@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
+@CrossOrigin({"https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/"})
 @RequiredArgsConstructor
 public class OrderController {
 

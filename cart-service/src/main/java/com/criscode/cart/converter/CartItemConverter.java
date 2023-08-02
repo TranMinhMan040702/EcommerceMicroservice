@@ -6,10 +6,8 @@ import com.criscode.cart.repository.CartRepository;
 import com.criscode.clients.cart.dto.CartItemDto;
 import com.criscode.clients.product.ProductClient;
 import com.criscode.exceptionutils.NotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

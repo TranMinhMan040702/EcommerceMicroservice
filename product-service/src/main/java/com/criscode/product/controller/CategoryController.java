@@ -2,11 +2,9 @@ package com.criscode.product.controller;
 
 import com.criscode.product.dto.CategoryDto;
 import com.criscode.product.service.ICategoryService;
-import com.criscode.product.service.impl.CategoryService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/product-service")
-@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
+@CrossOrigin({"https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/"})
 @AllArgsConstructor
 public class CategoryController {
 
@@ -27,7 +25,7 @@ public class CategoryController {
             @RequestParam(name = "file", required = false) MultipartFile file)
             throws JsonProcessingException {
 
-        CategoryDto categoryDto =  objectMapper.readValue(JsonObject, CategoryDto.class);
+        CategoryDto categoryDto = objectMapper.readValue(JsonObject, CategoryDto.class);
         return ResponseEntity.ok(categoryService.save(categoryDto, file));
     }
 

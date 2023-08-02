@@ -2,6 +2,7 @@ package com.criscode.mail.service.impl;
 
 import com.criscode.clients.mail.dto.EmailDetails;
 import com.criscode.mail.service.IMailService;
+import com.criscode.mail.service.IResetPassword;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.MessagingException;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.Random;
 
 @Component
@@ -22,6 +24,7 @@ public class MailService implements IMailService {
 
     private final JavaMailSender javaMailSender;
     private final OtpService otpService;
+    private final IResetPassword resetPassword;
 
     @Value("${spring.mail.username}")
     private String sender;
@@ -61,7 +64,6 @@ public class MailService implements IMailService {
     }
 
     @Override
-    @Async
     public void sendEmailResetPassword(String email) {
         if (email != null) {
             String code = randomAlphanumericString(10);
@@ -71,6 +73,8 @@ public class MailService implements IMailService {
             var content = "<b>Truy cập vào " + "<a href = \"" + url + "\">Ấn tại đây</a>"
                     + " hoặc đường dẫn <br/>" + "[" + "<a href = \"" + url + "\">" + url + "</a>"
                     + "]" + " để đặt lại mật khẩu.</b>";
+
+            resetPassword.save(code, email, new Date(System.currentTimeMillis() + 5 * 60 * 1000));
 
             sendEmail(email, subject, content, false, true);
         }

@@ -1,8 +1,8 @@
 package com.criscode.identity.controller;
 
+import com.criscode.clients.user.dto.AddressDto;
 import com.criscode.clients.user.dto.UserDto;
 import com.criscode.clients.user.dto.UserExistResponse;
-import com.criscode.clients.user.dto.AddressDto;
 import com.criscode.clients.user.dto.UserResponse;
 import com.criscode.identity.constants.ApplicationConstants;
 import com.criscode.identity.dto.ResetPasswordRequest;
@@ -10,7 +10,6 @@ import com.criscode.identity.service.IAddressService;
 import com.criscode.identity.service.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/identity-service/user/")
-@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
+@CrossOrigin({"https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/"})
 @RequiredArgsConstructor
 public class UserController {
 
@@ -91,4 +90,8 @@ public class UserController {
         userService.forgotPassword(email);
     }
 
+    @PostMapping("/save/new-password")
+    public ResponseEntity<?> saveNewPassword(@RequestBody ResetPasswordRequest resetPasswordRequest) {
+        return ResponseEntity.ok(userService.saveNewPassword(resetPasswordRequest));
+    }
 }

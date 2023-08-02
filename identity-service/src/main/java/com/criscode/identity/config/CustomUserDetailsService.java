@@ -2,7 +2,6 @@ package com.criscode.identity.config;
 
 import com.criscode.identity.entity.User;
 import com.criscode.identity.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

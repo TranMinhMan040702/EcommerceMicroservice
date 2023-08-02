@@ -12,7 +12,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/cart-service/cart")
-@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
+@CrossOrigin({"https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/"})
 @RequiredArgsConstructor
 public class CartController {
 
@@ -30,7 +30,7 @@ public class CartController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addToCart(@RequestBody CartItemDto cartItemDto){
+    public ResponseEntity<?> addToCart(@RequestBody CartItemDto cartItemDto) {
         return ResponseEntity.ok(cartService.addToCart(cartItemDto));
     }
 

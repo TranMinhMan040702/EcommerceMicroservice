@@ -1,7 +1,7 @@
 package com.criscode.identity.converter;
 
-import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.clients.user.dto.AddressDto;
+import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.identity.entity.Address;
 import com.criscode.identity.entity.User;
 import com.criscode.identity.repository.UserRepository;

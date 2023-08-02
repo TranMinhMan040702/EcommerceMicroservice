@@ -50,7 +50,7 @@ public class UserConverter {
         );
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-        if (!(userDto.getBirthday()==null)) {
+        if (!(userDto.getBirthday() == null)) {
             Date birthday = formatter.parse(userDto.getBirthday());
             user.setBirthday(birthday);
         }

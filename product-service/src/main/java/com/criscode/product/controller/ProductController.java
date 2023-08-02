@@ -7,7 +7,6 @@ import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.product.constants.ApplicationConstants;
 import com.criscode.product.repository.ProductRepository;
 import com.criscode.product.service.IProductService;
-import com.criscode.product.service.impl.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/product-service/product")
-@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
+@CrossOrigin({"https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/"})
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -30,7 +29,7 @@ public class ProductController {
 
     @GetMapping("/public")
     @ResponseStatus(HttpStatus.OK)
-    public ProductDto getProductById(@RequestParam("id") Integer id){
+    public ProductDto getProductById(@RequestParam("id") Integer id) {
         return productService.findById(id);
     }
 

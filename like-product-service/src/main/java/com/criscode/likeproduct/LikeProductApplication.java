@@ -15,6 +15,7 @@ public class LikeProductApplication {
     public static void main(String[] args) {
         SpringApplication.run(LikeProductApplication.class, args);
     }
+
     @Bean
     public HttpClient httpClient() {
         return HttpClient.create().resolver(DefaultAddressResolverGroup.INSTANCE);

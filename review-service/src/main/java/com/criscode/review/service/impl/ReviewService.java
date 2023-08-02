@@ -68,7 +68,7 @@ public class ReviewService implements IReviewService {
         for (Review review : reviews) {
             rating = rating + review.getRating();
         }
-        productClient.updateRating(productId, rating/reviews.size());
+        productClient.updateRating(productId, rating / reviews.size());
     }
 
     /**

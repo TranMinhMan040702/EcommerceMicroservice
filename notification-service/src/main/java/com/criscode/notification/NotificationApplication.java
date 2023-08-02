@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import reactor.netty.http.client.HttpClient;
 
-@SpringBootApplication (scanBasePackages = {
+@SpringBootApplication(scanBasePackages = {
         "com.criscode.amqp",
         "com.criscode.notification"
 })
@@ -18,6 +18,7 @@ public class NotificationApplication {
     public static void main(String[] args) {
         SpringApplication.run(NotificationApplication.class, args);
     }
+
     @Bean
     public HttpClient httpClient() {
         return HttpClient.create().resolver(DefaultAddressResolverGroup.INSTANCE);

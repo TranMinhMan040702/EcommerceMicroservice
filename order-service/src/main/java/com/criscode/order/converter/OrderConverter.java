@@ -2,9 +2,7 @@ package com.criscode.order.converter;
 
 import com.criscode.clients.user.UserClient;
 import com.criscode.order.dto.OrderDto;
-import com.criscode.order.entity.Delivery;
 import com.criscode.order.entity.Order;
-import com.criscode.order.repository.DeliveryRepository;
 import com.criscode.order.utils.HandleStatusOrder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;

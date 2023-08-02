@@ -1,13 +1,12 @@
 package com.criscode.identity.controller;
 
-import com.criscode.identity.dto.SingleResponse;
-import com.criscode.identity.dto.ValidateTokenResponse;
 import com.criscode.identity.dto.AuthRequest;
 import com.criscode.identity.dto.RegisterRequest;
+import com.criscode.identity.dto.SingleResponse;
+import com.criscode.identity.dto.ValidateTokenResponse;
 import com.criscode.identity.service.IAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

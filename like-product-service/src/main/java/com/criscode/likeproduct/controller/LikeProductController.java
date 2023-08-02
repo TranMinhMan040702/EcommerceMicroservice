@@ -1,15 +1,13 @@
 package com.criscode.likeproduct.controller;
 
 import com.criscode.likeproduct.service.ILikeProductService;
-import com.criscode.likeproduct.service.impl.LikeProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/like-product-service/")
-@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
+@CrossOrigin({"https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/"})
 @RequiredArgsConstructor
 public class LikeProductController {
 

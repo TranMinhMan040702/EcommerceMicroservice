@@ -7,15 +7,14 @@ import com.criscode.cart.enitty.CartItem;
 import com.criscode.cart.repository.CartItemRepository;
 import com.criscode.cart.repository.CartRepository;
 import com.criscode.cart.service.ICartService;
-import com.criscode.clients.user.UserClient;
 import com.criscode.clients.cart.dto.CartDto;
 import com.criscode.clients.cart.dto.CartItemDto;
+import com.criscode.clients.user.UserClient;
 import com.criscode.clients.user.dto.UserExistResponse;
 import com.criscode.exceptionutils.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

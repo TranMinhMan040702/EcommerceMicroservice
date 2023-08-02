@@ -9,7 +9,7 @@ public class FilterUtils {
 
     public static ServerWebExchange mutateRequestHeaders(ServerWebExchange exchange, Consumer<HttpHeaders> headersConsumer) {
         return exchange.mutate().request(
-                        exchange.getRequest().mutate().headers(headersConsumer).build()).build();
+                exchange.getRequest().mutate().headers(headersConsumer).build()).build();
     }
 
 }

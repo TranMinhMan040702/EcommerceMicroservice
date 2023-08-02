@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Integer> {
     List<Notification> findAllByRecipientIdOrderByTimestampDesc(Integer recipientId, PageRequest pageRequest);
+
     List<Notification> findAllByRecipientId(Integer recipientId);
 }

@@ -1,9 +1,9 @@
 package com.criscode.notification.service.impl;
 
 import com.criscode.amqp.RabbitMQMessageProducer;
+import com.criscode.clients.notification.dto.NotificationDto;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.notification.converter.NotificationConverter;
-import com.criscode.clients.notification.dto.NotificationDto;
 import com.criscode.notification.entity.Notification;
 import com.criscode.notification.repository.NotificationRepository;
 import com.criscode.notification.service.INotificationService;

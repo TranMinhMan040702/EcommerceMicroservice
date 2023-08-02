@@ -8,5 +8,5 @@ import lombok.*;
 @Getter
 @Builder
 public class EmailDetails {
-	private String recipient;
+    private String recipient;
 }
