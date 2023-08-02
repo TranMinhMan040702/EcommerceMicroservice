@@ -1,7 +1,6 @@
 package com.criscode.product.dto;
 
 import com.criscode.clients.product.dto.ProductDto;
-import com.criscode.product.entity.Product;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -20,7 +19,7 @@ public class CategoryDto {
     @NotBlank
     private String name;
 
-//    @NotBlank
+    //    @NotBlank
     private String image;
 
     private boolean isDeleted = false;

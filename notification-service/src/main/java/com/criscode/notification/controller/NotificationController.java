@@ -2,14 +2,13 @@ package com.criscode.notification.controller;
 
 import com.criscode.clients.notification.dto.NotificationDto;
 import com.criscode.notification.service.INotificationService;
-import com.criscode.notification.service.impl.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/notification-service/notification")
-@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
+@CrossOrigin({"https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/"})
 @RequiredArgsConstructor
 public class NotificationController {
 

@@ -1,12 +1,7 @@
 package com.criscode.clients.user.dto;
 
-import com.criscode.clients.cart.dto.CartDto;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +33,7 @@ public class UserDto {
     private Integer cartId;
     private List<AddressDto> addresses;
 
-//    @JsonProperty("cart")
-//    @JsonInclude(JsonInclude.Include.NON_NULL)
-//    private CartDto cartDto;
+    //    @JsonProperty("cart")
+    //    @JsonInclude(JsonInclude.Include.NON_NULL)
+    //    private CartDto cartDto;
 }

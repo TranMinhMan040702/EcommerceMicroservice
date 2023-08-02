@@ -12,9 +12,20 @@ spring:
       ddl-auto: update
   zipkin:
     base-url: http://localhost:9411
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
     fetch-registry: true
     register-with-eureka: true
+
+rabbitmq:
+  exchanges:
+    topic: mail.exchange
+  queue:
+    register-account: register_account.queue
+    forgot-pass: forgot_pass.queue
+  routing-key:
+    register-account: register_account.routing_key
+    forgot-pass: forgot_pass.routing_key

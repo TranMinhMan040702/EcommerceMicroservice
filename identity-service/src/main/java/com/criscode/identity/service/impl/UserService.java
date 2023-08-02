@@ -3,6 +3,7 @@ package com.criscode.identity.service.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.criscode.amqp.RabbitMQMessageProducer;
+import com.criscode.clients.mail.OtpClient;
 import com.criscode.clients.user.dto.UserDto;
 import com.criscode.clients.user.dto.UserExistResponse;
 import com.criscode.clients.user.dto.UserResponse;
@@ -15,7 +16,8 @@ import com.criscode.identity.entity.User;
 import com.criscode.identity.repository.UserRepository;
 import com.criscode.identity.service.IUserService;
 import com.criscode.identity.specification.UserSpecification;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -34,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class UserService implements IUserService {
 
@@ -43,6 +45,11 @@ public class UserService implements IUserService {
     private final Cloudinary cloudinary;
     private final PasswordEncoder passwordEncoder;
     private final RabbitMQMessageProducer producer;
+    private final OtpClient resetPasswordClient;
+    @Value("${rabbitmq.exchanges.topic}")
+    private String exchange;
+    @Value("${rabbitmq.routing-key.forgot-pass}")
+    private String forgotPassRoutingKey;
 
 
     @Override
@@ -88,6 +95,7 @@ public class UserService implements IUserService {
         );
         return userConverter.mapToDto(user);
     }
+
     @Override
     public UserDto updateUser(UserDto userDto, MultipartFile file) throws ParseException {
         User user = userConverter.mapToEntity(userDto);
@@ -115,7 +123,7 @@ public class UserService implements IUserService {
 
     @Override
     public ResetPasswordResponse resetPassword(ResetPasswordRequest resetPasswordRequest) {
-        ResetPasswordResponse response = new ResetPasswordResponse();
+
         Optional<User> user = userRepository.findByEmail(resetPasswordRequest.getEmail());
 
         if (user.isPresent()) {
@@ -124,22 +132,33 @@ public class UserService implements IUserService {
             if (encoder.matches(passwordCurrent, user.get().getPassword())) {
                 user.get().setPassword(passwordEncoder.encode(resetPasswordRequest.getPasswordNew()));
                 userRepository.save(user.get());
-                response.setStatus(HttpStatus.OK.value());
-                response.setMessage("Reset Password Success");
-                return response;
+                return ResetPasswordResponse.builder().status(HttpStatus.OK.value()).message("Reset Password Success").build();
             }
         }
-        response.setStatus(HttpStatus.BAD_REQUEST.value());
-        response.setMessage("Reset Password Fail");
-        return response;
+        return ResetPasswordResponse.builder().status(HttpStatus.BAD_REQUEST.value()).message("Reset Password Fail").build();
     }
 
     @Override
     public void forgotPassword(String email) {
-        String EXCHANGE = "internal.exchange";
-        String ROUTING_KEY = "internal.mail.routing-key";
+        producer.publish(email, exchange, forgotPassRoutingKey);
+    }
 
-        producer.publish(email, EXCHANGE, ROUTING_KEY);
+    @Override
+    public ResetPasswordResponse saveNewPassword(ResetPasswordRequest resetPasswordRequest) {
+
+        Boolean checkCode = resetPasswordClient.checkCodeAndEmail(resetPasswordRequest.getCode(),
+                resetPasswordRequest.getEmail());
+
+        if (checkCode) {
+            Optional<User> user = userRepository.findByEmail(resetPasswordRequest.getEmail());
+            user.get().setPassword(passwordEncoder.encode(resetPasswordRequest.getPasswordNew()));
+            userRepository.save(user.get());
+            resetPasswordClient.clearCode(resetPasswordRequest.getCode(), resetPasswordRequest.getEmail());
+
+            return ResetPasswordResponse.builder().status(HttpStatus.OK.value()).message("Change Password Success").build();
+        }
+        return ResetPasswordResponse.builder().status(HttpStatus.BAD_REQUEST.value()).message("Change Password Fail").build();
+
     }
 
 }

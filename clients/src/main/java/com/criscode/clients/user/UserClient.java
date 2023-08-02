@@ -16,6 +16,7 @@ public interface UserClient {
 
     @GetMapping("/api/v1/identity-service/user/admin/get-all-user")
     List<UserDto> findAll();
+
     @GetMapping("/api/v1/identity-service/user/get-user/{userId}")
     UserResponse getUser(@PathVariable("userId") Integer userId);
 

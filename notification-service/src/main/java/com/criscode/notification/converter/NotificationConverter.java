@@ -4,7 +4,6 @@ import com.criscode.clients.notification.dto.NotificationDto;
 import com.criscode.notification.entity.Notification;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

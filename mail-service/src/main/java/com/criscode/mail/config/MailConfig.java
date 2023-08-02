@@ -11,41 +11,50 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MailConfig {
 
-    @Value("${rabbitmq.exchanges.internal}")
-    private String internalExchange;
+    @Value("${rabbitmq.exchanges.topic}")
+    private String exchange;
 
-    @Value("${rabbitmq.queue.mail}")
-    private String mailQueue;
+    @Value("${rabbitmq.queue.register-account}")
+    private String registerAccountQueue;
 
-    @Value("${rabbitmq.routing-keys.internal-mail}")
-    private String internalMailRoutingKey;
+    @Value("${rabbitmq.queue.forgot-pass}")
+    private String forgotPassQueue;
 
-    @Bean
-    public TopicExchange internalTopicExchange() {
-        return new TopicExchange(this.internalExchange);
-    }
+    @Value("${rabbitmq.routing-key.register-account}")
+    private String registerAccountRoutingKey;
 
-    @Bean
-    public Queue mailQueue() {
-        return new Queue(this.mailQueue);
-    }
+    @Value("${rabbitmq.routing-key.forgot-pass}")
+    private String forgotPassRoutingKey;
 
     @Bean
-    public Binding internalToMailBinding() {
-        return BindingBuilder.bind(mailQueue())
-                .to(internalTopicExchange())
-                .with(this.internalMailRoutingKey);
+    public TopicExchange topicExchange() {
+        return new TopicExchange(exchange);
     }
 
-    public String getInternalExchange() {
-        return internalExchange;
+    @Bean
+    public Queue registerAccountQueue() {
+        return new Queue(registerAccountQueue);
     }
 
-    public String getMailQueue() {
-        return mailQueue;
+    @Bean
+    public Queue forgotPassQueue() {
+        return new Queue(forgotPassQueue);
     }
 
-    public String getInternalMailRoutingKey() {
-        return internalMailRoutingKey;
+    @Bean
+    public Binding bindingRegisterAccount() {
+        return BindingBuilder
+                .bind(registerAccountQueue())
+                .to(topicExchange())
+                .with(this.registerAccountRoutingKey);
     }
+
+    @Bean
+    public Binding bindingForgotPass() {
+        return BindingBuilder
+                .bind(forgotPassQueue())
+                .to(topicExchange())
+                .with(this.forgotPassRoutingKey);
+    }
+
 }

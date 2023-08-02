@@ -6,7 +6,6 @@ import com.criscode.clients.cart.dto.CartDto;
 import com.criscode.clients.mail.OtpClient;
 import com.criscode.clients.mail.dto.CheckOtpResponse;
 import com.criscode.clients.mail.dto.EmailDetails;
-import com.criscode.identity.dto.ValidateTokenResponse;
 import com.criscode.exceptionutils.AlreadyExistsException;
 import com.criscode.identity.config.CustomUserDetailsService;
 import com.criscode.identity.converter.UserConverter;
@@ -16,6 +15,7 @@ import com.criscode.identity.entity.User;
 import com.criscode.identity.repository.UserRepository;
 import com.criscode.identity.service.IAuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,8 +42,10 @@ public class AuthService implements IAuthService {
     private final CartClient cartClient;
     private final OtpClient otpClient;
     private final RabbitMQMessageProducer producer;
-    private String EXCHANGE = "internal.exchange";
-    private String ROUTING_KEY = "internal.mail.routing-key";
+    @Value("${rabbitmq.exchanges.topic}")
+    private String exchange;
+    @Value("${rabbitmq.routing-key.register-account}")
+    private String registerAccountRoutingKey;
 
     @Override
     public AuthResponse saveUser(RegisterRequest registerRequest, String code) {
@@ -73,8 +75,8 @@ public class AuthService implements IAuthService {
         }
         producer.publish(
                 EmailDetails.builder().recipient(email).build(),
-                EXCHANGE,
-                ROUTING_KEY
+                exchange,
+                registerAccountRoutingKey
         );
     }
 

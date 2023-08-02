@@ -6,7 +6,6 @@ import com.criscode.mail.repository.OtpRepository;
 import com.criscode.mail.service.IOtpService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Random;
@@ -28,7 +27,7 @@ public class OtpService implements IOtpService {
 
     @Override
     public CheckOtpResponse checkOtp(String code, String email) {
-        Otp otp =otpRepository.findByCodeAndEmail(code, email);
+        Otp otp = otpRepository.findByCodeAndEmail(code, email);
         return otp != null
                 ? new CheckOtpResponse(true)
                 : new CheckOtpResponse(false);

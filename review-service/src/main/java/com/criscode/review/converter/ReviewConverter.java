@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class ReviewConverter {
 
     private final UserClient userClient;
+
     public Review mapToEntity(ReviewDto reviewDto) {
         Review review = new Review();
         BeanUtils.copyProperties(reviewDto, review);

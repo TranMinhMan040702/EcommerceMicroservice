@@ -27,7 +27,10 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.time.YearMonth;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -229,6 +232,7 @@ public class OrderService implements IOrderService {
         calendar.set(Calendar.YEAR, year);
         return calendar.getTime();
     }
+
     private Double calulatorRevenue(List<Order> orders) {
         Double result = 0.0;
         for (Order order : orders) {

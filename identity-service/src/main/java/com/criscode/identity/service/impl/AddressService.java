@@ -1,8 +1,8 @@
 package com.criscode.identity.service.impl;
 
+import com.criscode.clients.user.dto.AddressDto;
 import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.identity.converter.AddressConverter;
-import com.criscode.clients.user.dto.AddressDto;
 import com.criscode.identity.entity.Address;
 import com.criscode.identity.entity.User;
 import com.criscode.identity.repository.AddressRepository;
@@ -11,7 +11,6 @@ import com.criscode.identity.service.IAddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

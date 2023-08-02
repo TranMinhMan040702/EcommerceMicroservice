@@ -1,7 +1,6 @@
 package com.criscode.clients.notification.dto;
 
 import lombok.*;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 

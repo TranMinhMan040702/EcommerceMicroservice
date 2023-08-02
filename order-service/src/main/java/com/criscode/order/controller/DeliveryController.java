@@ -4,9 +4,7 @@ import com.criscode.exceptionutils.NotFoundException;
 import com.criscode.order.dto.DeliveryDto;
 import com.criscode.order.repository.DeliveryRepository;
 import com.criscode.order.service.IDeliveryService;
-import com.criscode.order.service.impl.DeliveryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +12,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/order-service")
-@CrossOrigin({ "https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/" })
+@CrossOrigin({"https://thunderous-basbousa-75b1ca.netlify.app/", "http://localhost:3000/"})
 @RequiredArgsConstructor
 public class DeliveryController {
 
@@ -28,13 +26,13 @@ public class DeliveryController {
 
     @PostMapping("/admin/deliveries")
     public ResponseEntity<?> createDelivery(
-            @RequestBody @Valid DeliveryDto deliveryDto){
+            @RequestBody @Valid DeliveryDto deliveryDto) {
         return ResponseEntity.ok(deliveryService.save(deliveryDto));
     }
 
     @PutMapping("/admin/deliveries")
     public ResponseEntity<?> updateDelivery(
-            @RequestBody @Valid DeliveryDto deliveryDto){
+            @RequestBody @Valid DeliveryDto deliveryDto) {
         deliveryRepository.findById(deliveryDto.getId()).orElseThrow(
                 () -> new NotFoundException("Delivery not exist with id: " + deliveryDto.getId())
         );

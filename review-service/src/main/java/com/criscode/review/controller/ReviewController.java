@@ -2,7 +2,6 @@ package com.criscode.review.controller;
 
 import com.criscode.review.dto.ReviewDto;
 import com.criscode.review.service.IReviewService;
-import com.criscode.review.service.impl.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

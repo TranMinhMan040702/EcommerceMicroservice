@@ -8,18 +8,18 @@ import lombok.Setter;
 @Getter
 public class ReviewDto {
 
-	private Integer id;
-	
-	private String content;
+    private Integer id;
 
-	private Integer rating;
+    private String content;
 
-	private UserResponse user;
-	
-	private Integer orderId;
+    private Integer rating;
 
-	private Integer productId;
-	
-	private Boolean approved;
+    private UserResponse user;
+
+    private Integer orderId;
+
+    private Integer productId;
+
+    private Boolean approved;
 
 }

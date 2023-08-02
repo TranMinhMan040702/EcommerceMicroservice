@@ -20,13 +20,14 @@ import java.util.Optional;
 public class ApplicationConfig {
 
     private final PasswordEncoder passwordEncoder;
+
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
 
     @Bean
-    CommandLineRunner commandLineRunner (RoleRepository roleRepository, UserRepository userRepository) {
+    CommandLineRunner commandLineRunner(RoleRepository roleRepository, UserRepository userRepository) {
         return args -> {
 
             Role checkRole1 = roleRepository.findByRole("USER");

@@ -1,6 +1,5 @@
 package com.criscode.identity.service;
 
-import com.criscode.identity.dto.ValidateTokenResponse;
 import com.criscode.identity.dto.*;
 import org.springframework.stereotype.Service;
 

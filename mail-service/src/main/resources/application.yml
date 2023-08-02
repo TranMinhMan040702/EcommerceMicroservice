@@ -44,8 +44,10 @@ eureka:
 
 rabbitmq:
   exchanges:
-    internal: internal.exchange
+    topic: mail.exchange
   queue:
-    mail: mail.queue
-  routing-keys:
-    internal-mail: internal.mail.routing-key
+    register-account: register_account.queue
+    forgot-pass: forgot_pass.queue
+  routing-key:
+    register-account: register_account.routing_key
+    forgot-pass: forgot_pass.routing_key

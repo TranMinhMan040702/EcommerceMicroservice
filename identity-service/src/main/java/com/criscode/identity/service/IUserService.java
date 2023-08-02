@@ -31,4 +31,6 @@ public interface IUserService {
     ResetPasswordResponse resetPassword(ResetPasswordRequest resetPasswordRequest);
 
     void forgotPassword(String email);
+
+    ResetPasswordResponse saveNewPassword(ResetPasswordRequest resetPasswordRequest);
 }

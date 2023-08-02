@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface LikeProductRepository extends JpaRepository<LikeProduct, Integer> {
     LikeProduct findByUserIdAndProductId(Integer userId, Integer productId);
+
     List<LikeProduct> findByUserId(Integer userId);
 }
